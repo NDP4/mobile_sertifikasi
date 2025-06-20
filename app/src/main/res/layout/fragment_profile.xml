@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.ProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp"
+        android:background="@color/white">
+
+        <FrameLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_avatar_default"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/title_profile" />
+            <ImageView
+                android:id="@+id/btnEditAvatar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_edit"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="8dp"
+                android:contentDescription="Edit" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvUserInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login sebagai: user@email.com"
+            android:textColor="@color/primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lokasi: -"
+            android:textColor="@color/secondaryText"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="32dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEditProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:icon="@drawable/ic_edit"
+                app:iconPadding="8dp"
+                android:layout_marginBottom="12dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOrderHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Riwayat Pemesanan"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                app:icon="@drawable/ic_order_black_24dp"
+                app:iconPadding="8dp"
+                android:layout_marginBottom="12dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/white"
+                app:icon="@drawable/ic_logout"
+                app:iconPadding="8dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

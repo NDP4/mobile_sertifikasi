@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView android:text="Checkout"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/etNama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nama Penerima"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/etTelp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="No. Telepon"
+            android:inputType="phone"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/etAlamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Alamat Lengkap"
+            android:inputType="textPostalAddress"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/etKodepos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kode Pos"
+            android:inputType="number"
+            android:layout_marginBottom="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerProvinsi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerKota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:text="Produk yang Dibeli"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvOrderProducts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:text="Metode Pembayaran"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+        <RadioGroup
+            android:id="@+id/rgMetodeBayar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+            <RadioButton
+                android:id="@+id/rbTransfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transfer"/>
+            <RadioButton
+                android:id="@+id/rbCOD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COD"
+                android:layout_marginStart="16dp"/>
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvSubtotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subtotal: Rp 0"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+        <TextView
+            android:id="@+id/tvOngkir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ongkir: Rp 0"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+        <TextView
+            android:id="@+id/tvLamaKirim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lama Kirim: -"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+        <TextView
+            android:id="@+id/tvTotalBayar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Bayar: Rp 0"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnProsesCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Proses Checkout"
+            android:textAllCaps="false"
+            style="@style/Widget.MaterialComponents.Button"/>
+
+    </LinearLayout>
+</ScrollView>

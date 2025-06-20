@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Order Info Section -->
+        <TextView
+            android:id="@+id/tvOrderId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order ID: 123"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tvOrderDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tanggal: 2025-06-20"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvOrderStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: Belum Dibayar"
+            android:textColor="@color/secondaryText"
+            android:textSize="13sp"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tvOrderMetode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Metode Bayar: Transfer"
+            android:textColor="@color/primary"
+            android:textSize="13sp"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/tvOrderSubtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subtotal: Rp 0"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:layout_marginTop="6dp"/>
+
+        <TextView
+            android:id="@+id/tvOrderOngkir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ongkir: Rp 0"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvOrderTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Bayar: Rp 0"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="6dp"/>
+
+        <TextView
+            android:id="@+id/tvOrderAlamat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alamat: ..."
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:layout_marginTop="6dp"/>
+
+        <TextView
+            android:id="@+id/tvOrderTelp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telp: ..."
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvOrderKota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kota: ..."
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvOrderProvinsi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Provinsi: ..."
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvOrderKodepos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kode Pos: ..."
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvOrderLamaKirim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lama Kirim: ..."
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp"/>
+
+        <!-- Tambahkan judul produk -->
+        <TextView
+            android:id="@+id/tvOrderProductsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Produk yang Dibeli"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp"/>
+
+        <!-- RecyclerView untuk produk yang dibeli -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvOrderProducts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false"/>
+
+    </LinearLayout>
+</ScrollView>
