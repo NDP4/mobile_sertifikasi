@@ -19,10 +19,12 @@ import java.text.DecimalFormatSymbols;
 public class OrderDetailProductAdapter extends RecyclerView.Adapter<OrderDetailProductAdapter.ViewHolder> {
     private List<Product> products;
     private List<Integer> qtyList;
+    private List<Double> bayarList;
 
-    public OrderDetailProductAdapter(List<Product> products, List<Integer> qtyList) {
+    public OrderDetailProductAdapter(List<Product> products, List<Integer> qtyList, List<Double> bayarList) {
         this.products = products;
         this.qtyList = qtyList;
+        this.bayarList = bayarList;
     }
 
     @NonNull
@@ -34,7 +36,16 @@ public class OrderDetailProductAdapter extends RecyclerView.Adapter<OrderDetailP
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(products.get(position), qtyList.get(position));
+        Product product = products.get(position);
+        int qty = qtyList.get(position);
+        double bayar = bayarList != null && bayarList.size() > position ? bayarList.get(position) : 0;
+        String merk = null;
+        String foto = null;
+        if (product != null) {
+            merk = product.getMerk();
+            foto = product.getFoto_url();
+        }
+        holder.bind(product, qty, merk, foto, bayar);
     }
 
     @Override
@@ -55,8 +66,8 @@ public class OrderDetailProductAdapter extends RecyclerView.Adapter<OrderDetailP
             View btnDelete = itemView.findViewById(R.id.btnDelete);
             if (btnDelete != null) btnDelete.setVisibility(View.GONE);
         }
-        void bind(Product product, int qty) {
-            tvName.setText(product.getMerk());
+        void bind(Product product, int qty, String merk, String foto, double hargaBayar) {
+            tvName.setText(merk != null ? merk : (product != null ? product.getMerk() : "-"));
             NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
             formatter.setMinimumFractionDigits(0);
             String currencySymbol = formatter.getCurrency().getSymbol();
@@ -65,16 +76,29 @@ public class OrderDetailProductAdapter extends RecyclerView.Adapter<OrderDetailP
             DecimalFormatSymbols symbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
             symbols.setCurrencySymbol(formattedSymbol);
             ((DecimalFormat) formatter).setDecimalFormatSymbols(symbols);
-            double price = product.getHargajual();
-            double discount = product.getDiskonjual();
-            if (discount > 0) {
-                price = price - (price * discount / 100);
+            double price = 0;
+            if (product != null) {
+                double hargaJual = product.getHargajual();
+                double hargaBayarSatuan = hargaBayar / (qty > 0 ? qty : 1);
+                // Jika harga_jual == hargaBayarSatuan (tidak diskon), pakai harga_jual
+                // Jika tidak sama (ada diskon), pakai hargaBayarSatuan
+                if (Math.abs(hargaJual - hargaBayarSatuan) < 1) {
+                    price = hargaJual;
+                } else {
+                    price = hargaBayarSatuan;
+                }
+            } else {
+                price = hargaBayar / (qty > 0 ? qty : 1);
             }
             tvPrice.setText(formatter.format(price));
             tvQuantity.setText(String.valueOf(qty));
             tvSubtotal.setText(formatter.format(price * qty));
+            String fotoUrl = foto;
+            if (fotoUrl != null && !fotoUrl.startsWith("http")) {
+                fotoUrl = "https://apisertif.ndp.my.id/uploads/products/" + fotoUrl;
+            }
             Glide.with(itemView.getContext())
-                .load(product.getFoto_url())
+                .load(fotoUrl)
                 .placeholder(R.drawable.ic_product_placeholder)
                 .error(R.drawable.ic_product_placeholder)
                 .centerCrop()

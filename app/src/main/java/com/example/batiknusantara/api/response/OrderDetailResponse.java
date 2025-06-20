@@ -15,5 +15,8 @@ public class OrderDetailResponse implements Serializable {
         public int qty;
         public double bayar;
         public Product product;
+        // Tambahan field dari API
+        public String merk;
+        public String foto;
     }
 }

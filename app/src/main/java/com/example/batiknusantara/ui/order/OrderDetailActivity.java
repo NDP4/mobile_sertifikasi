@@ -26,6 +26,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     private ApiService apiService;
     private List<Product> productList = new ArrayList<>();
     private List<Integer> qtyList = new ArrayList<>();
+    private List<Double> bayarList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,29 +76,20 @@ public class OrderDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && response.body().status) {
                     productList.clear();
                     qtyList.clear();
-                    for (OrderDetailResponse.Item item : response.body().data) {
-                        // Build Product object from item fields if product is null
+                    bayarList.clear();
+                    List<OrderDetailResponse.Item> items = response.body().data;
+                    for (OrderDetailResponse.Item item : items) {
                         Product product = item.product;
                         if (product == null) {
                             product = new Product();
                             product.setKode(item.kode_brg);
-                            // Try to set other fields if available in item
-                            try {
-                                java.lang.reflect.Field merkField = item.getClass().getDeclaredField("merk");
-                                merkField.setAccessible(true);
-                                Object merkValue = merkField.get(item);
-                                if (merkValue != null) product.setMerk(merkValue.toString());
-                            } catch (Exception ignored) {}
-                            try {
-                                java.lang.reflect.Field fotoField = item.getClass().getDeclaredField("foto");
-                                fotoField.setAccessible(true);
-                                Object fotoValue = fotoField.get(item);
-                                if (fotoValue != null) product.setFoto_url(fotoValue.toString());
-                            } catch (Exception ignored) {}
+                            product.setMerk(item.merk);
+                            product.setFoto_url(item.foto != null ? "https://apisertif.ndp.my.id/uploads/products/" + item.foto : null);
                             product.setHargajual(item.harga_jual);
                         }
                         productList.add(product);
                         qtyList.add(item.qty);
+                        bayarList.add(item.bayar); // tambahkan harga bayar per item
                     }
                     setupProductRecycler();
                 }
@@ -110,7 +102,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     }
 
     private void setupProductRecycler() {
-        OrderDetailProductAdapter adapter = new OrderDetailProductAdapter(productList, qtyList);
+        OrderDetailProductAdapter adapter = new OrderDetailProductAdapter(productList, qtyList, bayarList);
         binding.rvOrderProducts.setLayoutManager(new LinearLayoutManager(this));
         binding.rvOrderProducts.setAdapter(adapter);
     }
