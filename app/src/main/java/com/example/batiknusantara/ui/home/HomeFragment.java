@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavOptions;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -24,6 +25,7 @@ import com.example.batiknusantara.databinding.FragmentHomeBinding;
 import com.example.batiknusantara.model.BannerModel;
 import com.example.batiknusantara.model.CategoryModel;
 import com.example.batiknusantara.model.Product;
+import com.example.batiknusantara.ui.product.ProductFragment;
 import com.example.batiknusantara.utils.SessionManager;
 
 
@@ -88,7 +90,14 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupCategories() {
-        categoryAdapter = new CategoryAdapter(new ArrayList<>());
+        categoryAdapter = new CategoryAdapter(new ArrayList<>(), categoryName -> {
+            // Navigasi ke ProductFragment dengan filter kategori menggunakan Navigation Component
+            Bundle bundle = new Bundle();
+            bundle.putString("filter_kategori", categoryName);
+            // Gunakan bottom navigation NavController
+            androidx.navigation.NavController navController = androidx.navigation.Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
+            navController.navigate(R.id.navigation_product, bundle);
+        });
         binding.rvCategories.setLayoutManager(
             new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.rvCategories.setAdapter(categoryAdapter);

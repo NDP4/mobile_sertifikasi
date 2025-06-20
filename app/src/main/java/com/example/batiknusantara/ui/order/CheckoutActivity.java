@@ -90,7 +90,11 @@ public class CheckoutActivity extends AppCompatActivity {
     private void updateSubtotal() {
         // Selalu update field subtotal dari cart
         CartManager cartManager = new CartManager(this);
-        subtotal = cartManager.getCartTotal();
+        subtotal = 0;
+        for (CartManager.CartItem item : cartManager.getCartItems().values()) {
+            double hargaJual = item.product.getHargajual();
+            subtotal += hargaJual * item.quantity;
+        }
         NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
         formatter.setMinimumFractionDigits(0);
         String currencySymbol = formatter.getCurrency().getSymbol();

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kategori"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerKategori"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Urutkan/Filter"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <RadioGroup
+        android:id="@+id/rgSort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton android:id="@+id/rbTerbaru" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Terbaru"/>
+        <RadioButton android:id="@+id/rbHargaTerendah" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Harga Terendah"/>
+        <RadioButton android:id="@+id/rbHargaTertinggi" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Harga Tertinggi"/>
+        <RadioButton android:id="@+id/rbAZ" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="A-Z"/>
+        <RadioButton android:id="@+id/rbDiskon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Diskon"/>
+        <RadioButton android:id="@+id/rbTanpaDiskon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tanpa Diskon"/>
+    </RadioGroup>
+</LinearLayout>

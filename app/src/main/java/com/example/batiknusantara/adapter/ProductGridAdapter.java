@@ -79,42 +79,37 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
             symbols.setCurrencySymbol(formattedSymbol);
             ((DecimalFormat) formatter).setDecimalFormatSymbols(symbols);
 
-            double originalPrice = product.getHargajual();
-            double discountPercent = product.getDiskonjual();
-
-            if (discountPercent > 0) {
-                double discountAmount = originalPrice * (discountPercent / 100.0);
-                double finalPrice = originalPrice - discountAmount;
-
+            double hargaPokok = product.getHargapokok();
+            double hargaJual = product.getHargajual();
+            if (hargaPokok > hargaJual) {
                 binding.tvOriginalPrice.setPaintFlags(binding.tvOriginalPrice.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
-                binding.tvOriginalPrice.setText(formatter.format(originalPrice));
+                binding.tvOriginalPrice.setText(formatter.format(hargaPokok));
                 binding.tvOriginalPrice.setTextSize(10f);
                 binding.tvOriginalPrice.setVisibility(View.VISIBLE);
-
-                binding.tvDiscountedPrice.setText(formatter.format(finalPrice));
-                binding.chipDiscount.setText(String.format("%d%%", (int)discountPercent));
+                binding.tvDiscountedPrice.setText(formatter.format(hargaJual));
                 binding.chipDiscount.setVisibility(View.VISIBLE);
+                int diskon = 0;
+                if (hargaPokok > 0) {
+                    diskon = (int) Math.round((hargaPokok - hargaJual) / hargaPokok * 100);
+                }
+                binding.chipDiscount.setText(String.format("%d%%", diskon));
             } else {
-                binding.tvDiscountedPrice.setText(formatter.format(originalPrice));
+                binding.tvDiscountedPrice.setText(formatter.format(hargaJual));
                 binding.chipDiscount.setVisibility(View.GONE);
                 binding.tvOriginalPrice.setVisibility(View.GONE);
             }
-            
             binding.tvStock.setText("Stok: " + product.getStok());
-
             Glide.with(itemView.getContext())
                 .load(product.getFoto_url())
                 .placeholder(R.drawable.ic_product_placeholder)
                 .error(R.drawable.ic_product_placeholder)
                 .centerCrop()
                 .into(binding.imgProduct);
-
             binding.btnDetail.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), ProductDetailActivity.class);
                 intent.putExtra("product_id", product.getKode());
                 itemView.getContext().startActivity(intent);
             });
-            
             binding.btnCart.setOnClickListener(v -> {
                 CartManager cartManager = new CartManager(itemView.getContext());
                 cartManager.addToCart(product);

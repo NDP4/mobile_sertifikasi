@@ -76,23 +76,32 @@ public class OrderDetailProductAdapter extends RecyclerView.Adapter<OrderDetailP
             DecimalFormatSymbols symbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
             symbols.setCurrencySymbol(formattedSymbol);
             ((DecimalFormat) formatter).setDecimalFormatSymbols(symbols);
-            double price = 0;
+            double hargaPokok = 0;
+            double hargaJual = 0;
             if (product != null) {
-                double hargaJual = product.getHargajual();
-                double hargaBayarSatuan = hargaBayar / (qty > 0 ? qty : 1);
-                // Jika harga_jual == hargaBayarSatuan (tidak diskon), pakai harga_jual
-                // Jika tidak sama (ada diskon), pakai hargaBayarSatuan
-                if (Math.abs(hargaJual - hargaBayarSatuan) < 1) {
-                    price = hargaJual;
-                } else {
-                    price = hargaBayarSatuan;
-                }
+                hargaPokok = product.getHargapokok();
+                hargaJual = product.getHargajual();
             } else {
-                price = hargaBayar / (qty > 0 ? qty : 1);
+                hargaJual = hargaBayar / (qty > 0 ? qty : 1);
+                hargaPokok = hargaJual;
             }
-            tvPrice.setText(formatter.format(price));
+            if (hargaPokok > hargaJual) {
+                // Ada diskon, tampilkan hargaPokok dicoret dan hargaJual
+                String hargaPokokStr = formatter.format(hargaPokok);
+                String hargaJualStr = formatter.format(hargaJual);
+                tvPrice.setText(hargaJualStr + "  ");
+                tvPrice.setPaintFlags(tvPrice.getPaintFlags() & ~android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+                // Tampilkan harga pokok dicoret di bawah harga jual
+                tvPrice.append("\n");
+                tvPrice.append(hargaPokokStr);
+                tvPrice.setPaintFlags(tvPrice.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                // Tidak ada diskon, tampilkan hanya hargaJual
+                tvPrice.setText(formatter.format(hargaJual));
+                tvPrice.setPaintFlags(tvPrice.getPaintFlags() & ~android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+            }
             tvQuantity.setText(String.valueOf(qty));
-            tvSubtotal.setText(formatter.format(price * qty));
+            tvSubtotal.setText(formatter.format(hargaJual * qty));
             String fotoUrl = foto;
             if (fotoUrl != null && !fotoUrl.startsWith("http")) {
                 fotoUrl = "https://apisertif.ndp.my.id/uploads/products/" + fotoUrl;

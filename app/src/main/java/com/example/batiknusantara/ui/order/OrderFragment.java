@@ -62,7 +62,11 @@ public class OrderFragment extends Fragment {
     }
 
     private void updateSubtotal() {
-        double subtotal = cartManager.getCartTotal();
+        double subtotal = 0;
+        for (CartManager.CartItem item : cartManager.getCartItems().values()) {
+            double hargaJual = item.product.getHargajual();
+            subtotal += hargaJual * item.quantity;
+        }
         NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
         formatter.setMinimumFractionDigits(0);
         String currencySymbol = formatter.getCurrency().getSymbol();

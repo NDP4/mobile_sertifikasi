@@ -13,9 +13,19 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     private List<CategoryModel> categories;
+    private OnCategoryClickListener onCategoryClickListener;
 
-    public CategoryAdapter(List<CategoryModel> categories) {
+    public CategoryAdapter(List<CategoryModel> categories, OnCategoryClickListener listener) {
         this.categories = categories;
+        this.onCategoryClickListener = listener;
+    }
+
+    public interface OnCategoryClickListener {
+        void onCategoryClick(String categoryName);
+    }
+
+    public void setOnCategoryClickListener(OnCategoryClickListener listener) {
+        this.onCategoryClickListener = listener;
     }
 
     @NonNull
@@ -29,8 +39,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CategoryModel category = categories.get(position);
-        holder.icon.setImageResource(category.getIconResource());
-        holder.name.setText(category.getName());
+        String name = category.getName();
+        if ("Dress".equalsIgnoreCase(name)) {
+            holder.icon.setImageResource(R.drawable.ic_dress);
+        } else if ("Blouse".equalsIgnoreCase(name)) {
+            holder.icon.setImageResource(R.drawable.ic_blouse);
+        } else if ("Kemeja Anak".equalsIgnoreCase(name)) {
+            holder.icon.setImageResource(R.drawable.ic_kemeja_anak);
+        } else {
+            holder.icon.setImageResource(category.getIconResource());
+        }
+        holder.name.setText(name);
+        holder.itemView.setOnClickListener(v -> {
+            if (onCategoryClickListener != null) {
+                onCategoryClickListener.onCategoryClick(name);
+            }
+        });
     }
 
     @Override

@@ -65,14 +65,19 @@ public class OrderProductAdapter extends RecyclerView.Adapter<OrderProductAdapte
             DecimalFormatSymbols symbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
             symbols.setCurrencySymbol(formattedSymbol);
             ((DecimalFormat) formatter).setDecimalFormatSymbols(symbols);
-            double price = product.getHargajual();
-            double discount = product.getDiskonjual();
-            if (discount > 0) {
-                price = price - (price * discount / 100);
+            double hargaPokok = product.getHargapokok();
+            double hargaJual = product.getHargajual();
+            if (hargaPokok > hargaJual) {
+                // Ada diskon, tampilkan hargaPokok dicoret dan hargaJual
+                tvPrice.setText(formatter.format(hargaJual) + "  ");
+                tvPrice.setPaintFlags(tvPrice.getPaintFlags() & ~android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                // Tidak ada diskon, tampilkan hanya hargaJual
+                tvPrice.setText(formatter.format(hargaJual));
+                tvPrice.setPaintFlags(tvPrice.getPaintFlags() & ~android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
             }
-            tvPrice.setText(formatter.format(price));
             tvQuantity.setText(String.valueOf(item.quantity));
-            tvSubtotal.setText(formatter.format(price * item.quantity));
+            tvSubtotal.setText(formatter.format(hargaJual * item.quantity));
             Glide.with(itemView.getContext())
                 .load(product.getFoto_url())
                 .placeholder(R.drawable.ic_product_placeholder)

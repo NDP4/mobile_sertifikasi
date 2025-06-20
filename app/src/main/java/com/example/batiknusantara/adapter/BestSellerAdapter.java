@@ -75,39 +75,31 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Vi
             formatter.setMinimumFractionDigits(0);
             String currencySymbol = formatter.getCurrency().getSymbol();
             String formattedSymbol = currencySymbol + " ";
-            formatter.setCurrency(java.util.Currency.getInstance("IDR")); // Reset to IDR
+            formatter.setCurrency(java.util.Currency.getInstance("IDR"));
             DecimalFormatSymbols symbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
             symbols.setCurrencySymbol(formattedSymbol);
             ((DecimalFormat) formatter).setDecimalFormatSymbols(symbols);
-            double originalPrice = product.getHargajual();
-            double discountPercent = product.getDiskonjual();
-
-            if (discountPercent > 0) {
-                // Calculate discounted price
-                double discountAmount = originalPrice * (discountPercent / 100.0);
-                double finalPrice = originalPrice - discountAmount;
-
-                // Show original price with strikethrough and smaller text size
+            double hargaPokok = product.getHargapokok();
+            double hargaJual = product.getHargajual();
+            if (hargaPokok > hargaJual) {
                 binding.tvOriginalPrice.setPaintFlags(binding.tvOriginalPrice.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
-                binding.tvOriginalPrice.setText(formatter.format(originalPrice));
-                binding.tvOriginalPrice.setTextSize(10f); // Set smaller text size (12sp)
+                binding.tvOriginalPrice.setText(formatter.format(hargaPokok));
+                binding.tvOriginalPrice.setTextSize(10f);
                 binding.tvOriginalPrice.setVisibility(View.VISIBLE);
-
-                // Show discounted price with normal text size
-                binding.tvDiscountedPrice.setText(formatter.format(finalPrice));
-                binding.tvDiscountedPrice.setTextSize(14f); // Set normal text size (14sp)
-
-                // Show discount chip
-                binding.chipDiscount.setText(String.format("%d%%", (int)discountPercent));
+                binding.tvDiscountedPrice.setText(formatter.format(hargaJual));
+                binding.tvDiscountedPrice.setTextSize(14f);
                 binding.chipDiscount.setVisibility(View.VISIBLE);
+                int diskon = 0;
+                if (hargaPokok > 0) {
+                    diskon = (int) Math.round((hargaPokok - hargaJual) / hargaPokok * 100);
+                }
+                binding.chipDiscount.setText(String.format("%d%%", diskon));
             } else {
-                // Show only original price without strikethrough
-                binding.tvDiscountedPrice.setText(formatter.format(originalPrice));
-                binding.tvDiscountedPrice.setTextSize(14f); // Set normal text size
+                binding.tvDiscountedPrice.setText(formatter.format(hargaJual));
+                binding.tvDiscountedPrice.setTextSize(14f);
                 binding.chipDiscount.setVisibility(View.GONE);
                 binding.tvOriginalPrice.setVisibility(View.GONE);
             }
-            
             binding.tvStock.setText("Stok: " + product.getStok());
 
             // Load image with error handling

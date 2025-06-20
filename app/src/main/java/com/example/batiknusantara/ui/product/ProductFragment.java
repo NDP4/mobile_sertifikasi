@@ -1,17 +1,22 @@
 package com.example.batiknusantara.ui.product;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import android.widget.SearchView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.batiknusantara.R;
 import com.example.batiknusantara.adapter.ProductGridAdapter;
 import com.example.batiknusantara.adapter.ProductSuggestionAdapter;
 import com.example.batiknusantara.api.ApiClient;
@@ -34,16 +39,45 @@ public class ProductFragment extends Fragment {
     private ProductSuggestionAdapter suggestionAdapter;
     private List<Product> allProducts = new ArrayList<>();
     private List<Product> filteredProducts = new ArrayList<>();
+    private String filterKategori = null;
+    private String filterSort = null;
+    private Boolean filterDiskon = null;
+    private List<String> kategoriList = new ArrayList<>();
+    private int selectedKategoriIndex = -1;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProductBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // Ambil filter kategori dari argument jika ada
+        if (getArguments() != null && getArguments().containsKey("filter_kategori")) {
+            filterKategori = getArguments().getString("filter_kategori");
+        }
+
         setupRecyclerView();
         setupSuggestionRecyclerView();
         setupSearchView();
+        setupFilterButton();
         loadProducts();
+
+        // Tambahkan tombol reset filter jika filterKategori tidak null
+        binding.btnResetFilter.setOnClickListener(v -> {
+            if (getArguments() != null && getArguments().containsKey("filter_kategori")) {
+                requireActivity().onBackPressed();
+            } else {
+                filterKategori = null;
+                filterSort = null;
+                filterDiskon = null;
+                filterProducts("");
+                binding.btnResetFilter.setVisibility(View.GONE);
+            }
+        });
+        if (filterKategori != null) {
+            binding.btnResetFilter.setVisibility(View.VISIBLE);
+        } else {
+            binding.btnResetFilter.setVisibility(View.GONE);
+        }
 
         return root;
     }
@@ -110,15 +144,113 @@ public class ProductFragment extends Fragment {
         binding.rvSuggestionProduk.setVisibility(suggestions.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
+    private void setupFilterButton() {
+        binding.btnFilterProduk.setOnClickListener(v -> showFilterDialog());
+    }
+
+    private void showFilterDialog() {
+        // Ambil kategori unik dari allProducts
+        kategoriList.clear();
+        kategoriList.add("Semua Kategori");
+        for (Product p : allProducts) {
+            String kat = p.getKategori();
+            if (kat != null && !kat.isEmpty() && !kategoriList.contains(kat)) {
+                kategoriList.add(kat);
+            }
+        }
+        View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_filter_produk, null);
+        Spinner spinnerKategori = dialogView.findViewById(R.id.spinnerKategori);
+        ArrayAdapter<String> kategoriAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, kategoriList);
+        kategoriAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerKategori.setAdapter(kategoriAdapter);
+        if (filterKategori != null) {
+            int idx = kategoriList.indexOf(filterKategori);
+            spinnerKategori.setSelection(idx >= 0 ? idx : 0);
+        } else {
+            spinnerKategori.setSelection(0);
+        }
+        // RadioGroup untuk sort/diskon
+        RadioGroup rgSort = dialogView.findViewById(R.id.rgSort);
+        rgSort.clearCheck();
+        if (filterSort != null) {
+            switch (filterSort) {
+                case "terbaru": rgSort.check(R.id.rbTerbaru); break;
+                case "harga_terendah": rgSort.check(R.id.rbHargaTerendah); break;
+                case "harga_tertinggi": rgSort.check(R.id.rbHargaTertinggi); break;
+                case "az": rgSort.check(R.id.rbAZ); break;
+            }
+        } else if (filterDiskon != null) {
+            if (filterDiskon) rgSort.check(R.id.rbDiskon);
+            else rgSort.check(R.id.rbTanpaDiskon);
+        }
+        rgSort.setOnCheckedChangeListener((group, checkedId) -> {
+            filterSort = null;
+            filterDiskon = null;
+            if (checkedId == R.id.rbTerbaru) filterSort = "terbaru";
+            else if (checkedId == R.id.rbHargaTerendah) filterSort = "harga_terendah";
+            else if (checkedId == R.id.rbHargaTertinggi) filterSort = "harga_tertinggi";
+            else if (checkedId == R.id.rbAZ) filterSort = "az";
+            else if (checkedId == R.id.rbDiskon) filterDiskon = true;
+            else if (checkedId == R.id.rbTanpaDiskon) filterDiskon = false;
+        });
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Filter Produk");
+        builder.setView(dialogView);
+        builder.setPositiveButton("Terapkan", (dialog, which) -> {
+            int selectedIdx = spinnerKategori.getSelectedItemPosition();
+            if (selectedIdx > 0) {
+                filterKategori = kategoriList.get(selectedIdx);
+            } else {
+                filterKategori = null;
+            }
+            // Ambil pilihan sort/diskon dari RadioGroup (sudah di-set di listener)
+            filterProducts(binding.searchViewProduk.getQuery().toString());
+            if (filterKategori != null) {
+                binding.btnResetFilter.setVisibility(View.VISIBLE);
+            } else {
+                binding.btnResetFilter.setVisibility(View.GONE);
+            }
+        });
+        builder.setNegativeButton("Batal", (dialog, which) -> dialog.dismiss());
+        builder.setNeutralButton("Reset", (dialog, which) -> {
+            filterSort = null;
+            filterDiskon = null;
+            filterKategori = null;
+            rgSort.clearCheck();
+            filterProducts(binding.searchViewProduk.getQuery().toString());
+            binding.btnResetFilter.setVisibility(View.GONE);
+        });
+        builder.show();
+    }
+
     private void filterProducts(String query) {
         filteredProducts.clear();
-        if (query.isEmpty()) {
-            filteredProducts.addAll(allProducts);
-        } else {
-            for (Product p : allProducts) {
-                if (p.getMerk().toLowerCase().contains(query.toLowerCase())) {
-                    filteredProducts.add(p);
-                }
+        for (Product p : allProducts) {
+            boolean matchKategori = (filterKategori == null) || (p.getKategori() != null && p.getKategori().equalsIgnoreCase(filterKategori));
+            boolean matchQuery = query.isEmpty() || (p.getMerk().toLowerCase().contains(query.toLowerCase()));
+            boolean matchDiskon = true;
+            if (filterDiskon != null) {
+                matchDiskon = filterDiskon ? (p.getHargapokok() > p.getHargajual()) : (p.getHargapokok() == p.getHargajual());
+            }
+            if (matchKategori && matchQuery && matchDiskon) {
+                filteredProducts.add(p);
+            }
+        }
+        // Sorting
+        if (filterSort != null) {
+            switch (filterSort) {
+                case "terbaru":
+                    // Assuming Product has getCreatedAt() or similar, else skip
+                    break;
+                case "harga_terendah":
+                    filteredProducts.sort((a, b) -> Double.compare(a.getHargajual(), b.getHargajual()));
+                    break;
+                case "harga_tertinggi":
+                    filteredProducts.sort((a, b) -> Double.compare(b.getHargajual(), a.getHargajual()));
+                    break;
+                case "az":
+                    filteredProducts.sort((a, b) -> a.getMerk().compareToIgnoreCase(b.getMerk()));
+                    break;
             }
         }
         productAdapter.updateProducts(filteredProducts);
