@@ -94,11 +94,11 @@ public class OrderFragment extends Fragment {
                 Intent intent = new Intent(requireContext(), CheckoutActivity.class);
                 startActivity(intent);
                 // You can navigate to a new activity or show a success dialog
-                new AlertDialog.Builder(requireContext())
-                    .setTitle("Checkout")
-                    .setMessage("Checkout berhasil!")
-                    .setPositiveButton("OK", null)
-                    .show();
+//                new AlertDialog.Builder(requireContext())
+//                    .setTitle("Checkout")
+//                    .setMessage("Checkout berhasil!")
+//                    .setPositiveButton("OK", null)
+//                    .show();
             }
         });
     }

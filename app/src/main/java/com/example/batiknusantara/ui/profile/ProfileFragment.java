@@ -71,6 +71,7 @@ public class ProfileFragment extends Fragment {
         View root = binding.getRoot();
         sessionManager = new SessionManager(requireContext());
 
+
         // ApiService dengan timeout 60 detik
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
