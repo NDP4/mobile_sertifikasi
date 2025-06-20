@@ -13,4 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
-/app/src/main/res/drawable/*.png
+/app/src/main/res/drawable*/**
+/app/src/main/res/raw/**
+*.json
