@@ -81,6 +81,10 @@ public class EditProfileActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
+                        // ambil nama baru dari input
+                        String newName = binding.etNama.getText().toString();
+                        // update session manager dengan nama baru
+                        sessionManager.setName(newName);
                         Toasty.success(EditProfileActivity.this, "Profile berhasil diupdate", Toasty.LENGTH_SHORT, true).show();
                         finish();
                     } else {

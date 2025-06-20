@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,7 +104,7 @@ public class CheckoutActivity extends AppCompatActivity {
         DecimalFormatSymbols symbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
         symbols.setCurrencySymbol(formattedSymbol);
         ((DecimalFormat) formatter).setDecimalFormatSymbols(symbols);
-        binding.tvSubtotal.setText("Subtotal: " + formatter.format(subtotal));
+        binding.tvSubtotal.setText(formatter.format(subtotal));
         updateTotal();
     }
 
@@ -117,7 +118,7 @@ public class CheckoutActivity extends AppCompatActivity {
         DecimalFormatSymbols symbols = ((DecimalFormat) formatter).getDecimalFormatSymbols();
         symbols.setCurrencySymbol(formattedSymbol);
         ((DecimalFormat) formatter).setDecimalFormatSymbols(symbols);
-        binding.tvTotalBayar.setText("Total Bayar: " + formatter.format(total));
+        binding.tvTotalBayar.setText(formatter.format(total));
     }
 
     private void setupSpinnerProvinsi() {
@@ -144,12 +145,12 @@ public class CheckoutActivity extends AppCompatActivity {
                         public void onNothingSelected(AdapterView<?> parent) {}
                     });
                 } else {
-                    Toast.makeText(CheckoutActivity.this, "Gagal load provinsi", Toast.LENGTH_SHORT).show();
+                    Toasty.error(CheckoutActivity.this, "Gagal load provinsi", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<RajaOngkirResponse<List<Province>>> call, Throwable t) {
-                Toast.makeText(CheckoutActivity.this, "Gagal load provinsi", Toast.LENGTH_SHORT).show();
+                Toasty.error(CheckoutActivity.this, "Gagal load provinsi", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -184,12 +185,12 @@ public class CheckoutActivity extends AppCompatActivity {
                         public void onNothingSelected(AdapterView<?> parent) {}
                     });
                 } else {
-                    Toast.makeText(CheckoutActivity.this, "Gagal load kota", Toast.LENGTH_SHORT).show();
+                    Toasty.error(CheckoutActivity.this, "Gagal load kota", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<RajaOngkirResponse<List<City>>> call, Throwable t) {
-                Toast.makeText(CheckoutActivity.this, "Gagal load kota", Toast.LENGTH_SHORT).show();
+                Toasty.error(CheckoutActivity.this, "Gagal load kota", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -238,8 +239,8 @@ public class CheckoutActivity extends AppCompatActivity {
                                     symbols.setCurrencySymbol(formattedSymbol);
                                     ((DecimalFormat) formatter).setDecimalFormatSymbols(symbols);
 
-                                    binding.tvOngkir.setText("Ongkir: " + formatter.format(ongkir));
-                                    binding.tvLamaKirim.setText("Lama Kirim: " + lamaKirim);
+                                    binding.tvOngkir.setText(formatter.format(ongkir));
+                                    binding.tvLamaKirim.setText(lamaKirim);
 
                                     // Update total bayar
                                     updateTotal();
@@ -247,24 +248,24 @@ public class CheckoutActivity extends AppCompatActivity {
                             }
                         }
                     } else {
-                        Toast.makeText(CheckoutActivity.this, "Gagal hitung ongkir", Toast.LENGTH_SHORT).show();
+                        Toasty.error(CheckoutActivity.this, "Gagal hitung ongkir", Toast.LENGTH_SHORT).show();
                     }
 
                 }
                 @Override
                 public void onFailure(Call<RajaOngkirCostResponse> call, Throwable t) {
-                    Toast.makeText(CheckoutActivity.this, "Gagal hitung ongkir", Toast.LENGTH_SHORT).show();
+                    Toasty.error(CheckoutActivity.this, "Gagal hitung ongkir", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
-            Toast.makeText(this, "Gagal hitung ongkir", Toast.LENGTH_SHORT).show();
+                Toasty.error(this, "Gagal hitung ongkir", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void setupCheckoutButton() {
         binding.btnProsesCheckout.setOnClickListener(v -> {
             if (!sessionManager.isLoggedIn()) {
-                Toast.makeText(this, "Anda harus login terlebih dahulu", Toast.LENGTH_SHORT).show();
+                Toasty.warning(this, "Anda harus login terlebih dahulu", Toast.LENGTH_SHORT).show();
                 return;
             }
             OrderCreateRequest request = new OrderCreateRequest();
@@ -297,16 +298,16 @@ public class CheckoutActivity extends AppCompatActivity {
                     binding.btnProsesCheckout.setEnabled(true);
                     if (response.isSuccessful() && response.body() != null && response.body().status) {
                         cartManager.clearCart();
-                        Toast.makeText(CheckoutActivity.this, "Order berhasil dibuat!", Toast.LENGTH_SHORT).show();
+                        Toasty.success(CheckoutActivity.this, "Order berhasil dibuat!", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
-                        Toast.makeText(CheckoutActivity.this, "Gagal membuat order", Toast.LENGTH_SHORT).show();
+                        Toasty.error(CheckoutActivity.this, "Gagal membuat order", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
                 public void onFailure(Call<OrderCreateResponse> call, Throwable t) {
                     binding.btnProsesCheckout.setEnabled(true);
-                    Toast.makeText(CheckoutActivity.this, "Gagal membuat order: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(CheckoutActivity.this, "Gagal membuat order: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         });

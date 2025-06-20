@@ -36,4 +36,5 @@
 
 <!--    warna lain-->
     <color name="light_gray">#F5F5F5</color>
+    <color name="dark_gray">#616161</color>
 </resources>

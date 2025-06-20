@@ -1,146 +1,382 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/light_gray">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="12dp">
 
-        <TextView android:text="Checkout"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"/>
-
-        <EditText
-            android:id="@+id/etNama"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nama Penerima"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="8dp"/>
-
-        <EditText
-            android:id="@+id/etTelp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="No. Telepon"
-            android:inputType="phone"
-            android:layout_marginBottom="8dp"/>
-
-        <EditText
-            android:id="@+id/etAlamat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Alamat Lengkap"
-            android:inputType="textPostalAddress"
-            android:layout_marginBottom="8dp"/>
-
-        <EditText
-            android:id="@+id/etKodepos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Kode Pos"
-            android:inputType="number"
-            android:layout_marginBottom="8dp"/>
-
-        <Spinner
-            android:id="@+id/spinnerProvinsi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"/>
-
-        <Spinner
-            android:id="@+id/spinnerKota"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"/>
-
+        <!-- Header -->
         <TextView
-            android:text="Produk yang Dibeli"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvOrderProducts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:layout_marginBottom="16dp"/>
-
-        <TextView
-            android:text="Metode Pembayaran"
+            android:text="Checkout"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"/>
+            android:textColor="@color/primary"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:paddingVertical="8dp"/>
 
-        <RadioGroup
-            android:id="@+id/rgMetodeBayar"
+        <!-- Shipping Information Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
-            <RadioButton
-                android:id="@+id/rbTransfer"
-                android:layout_width="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/white"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Transfer"/>
-            <RadioButton
-                android:id="@+id/rbCOD"
-                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Informasi Pengiriman"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- Nama Penerima -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:counterTextColor="@color/dark_gray"
+                    app:boxStrokeColor="@color/primary"
+                    app:hintTextColor="@color/dark_gray"
+                    app:helperTextTextColor="@color/dark_gray"
+                    app:placeholderTextColor="@color/dark_gray"
+                    app:placeholderText="Nama penerima"
+                    android:layout_marginBottom="8dp"
+                    android:hint="Nama Penerima">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNama"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_gray"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- No. Telepon -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:counterTextColor="@color/dark_gray"
+                    app:boxStrokeColor="@color/primary"
+                    app:hintTextColor="@color/dark_gray"
+                    app:helperTextTextColor="@color/dark_gray"
+                    app:placeholderTextColor="@color/dark_gray"
+                    android:hint="No. Telepon">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTelp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_gray"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Alamat Lengkap -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:counterTextColor="@color/dark_gray"
+                    app:boxStrokeColor="@color/primary"
+                    app:hintTextColor="@color/dark_gray"
+                    app:helperTextTextColor="@color/dark_gray"
+                    app:placeholderTextColor="@color/dark_gray"
+                    android:hint="Alamat Lengkap">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etAlamat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPostalAddress"
+                        android:lines="2"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_gray"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Kode Pos -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:counterTextColor="@color/dark_gray"
+                    app:boxStrokeColor="@color/primary"
+                    app:hintTextColor="@color/dark_gray"
+                    app:helperTextTextColor="@color/dark_gray"
+                    app:placeholderTextColor="@color/dark_gray"
+                    android:hint="Kode Pos">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etKodepos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/dark_gray"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Provinsi -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pilih Provinsi"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="2dp"/>
+                <Spinner
+                    android:id="@+id/spinnerProvinsi"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:spinnerMode="dropdown"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- Kota/Kabupaten -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pilih Kota/Kabupaten"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="2dp"/>
+                <Spinner
+                    android:id="@+id/spinnerKota"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:spinnerMode="dropdown"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <!-- Order Summary Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardElevation="2dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="COD"
-                android:layout_marginStart="16dp"/>
-        </RadioGroup>
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvSubtotal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Subtotal: Rp 0"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp"/>
-        <TextView
-            android:id="@+id/tvOngkir"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ongkir: Rp 0"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp"/>
-        <TextView
-            android:id="@+id/tvLamaKirim"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Lama Kirim: -"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp"/>
-        <TextView
-            android:id="@+id/tvTotalBayar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Total Bayar: Rp 0"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Produk yang Dibeli"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvOrderProducts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginBottom="16dp"/>
+
+
+                <!-- Payment Method -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary"
+                    android:text="Metode Pembayaran"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <RadioGroup
+                    android:id="@+id/rgMetodeBayar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="16dp">
+                    <RadioButton
+                        android:id="@+id/rbTransfer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/primary"
+                        android:text="Transfer"
+                        android:buttonTint="@color/primary"/>
+                    <RadioButton
+                        android:id="@+id/rbCOD"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/primary"
+                        android:text="COD"
+                        android:buttonTint="@color/primary"/>
+                </RadioGroup>
+
+                <!-- Order Summary -->
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:visibility="gone"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginVertical="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ringkasan Pesanan"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:layout_marginBottom="8dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="4dp">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Subtotal"
+                        android:textColor="@color/dark_gray"/>
+                    <TextView
+                        android:id="@+id/tvSubtotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="Rp 0"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="4dp">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ongkos Kirim"
+                        android:textColor="@color/dark_gray"/>
+                    <TextView
+                        android:id="@+id/tvOngkir"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="Rp 0"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="4dp">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Estimasi Pengiriman"
+                        android:textColor="@color/dark_gray"/>
+                    <TextView
+                        android:id="@+id/tvLamaKirim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="-"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginVertical="8dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/primary"
+                        android:text="Total Pembayaran"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/tvTotalBayar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rp 0"
+                        android:textSize="18sp"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Checkout Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnProsesCheckout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/white"
+            android:paddingVertical="12dp"
             android:text="Proses Checkout"
+            android:textSize="16sp"
             android:textAllCaps="false"
+            app:cornerRadius="8dp"
             style="@style/Widget.MaterialComponents.Button"/>
 
     </LinearLayout>

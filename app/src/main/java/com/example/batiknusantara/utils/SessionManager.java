@@ -48,4 +48,11 @@ public class SessionManager {
     public String getEmail() {
         return pref.getString(KEY_EMAIL, null);
     }
+
+    // mengambil nama dari edit profile
+    public void setName(String name) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(KEY_NAME, name);
+        editor.apply();
+    }
 }
