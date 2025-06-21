@@ -2,9 +2,12 @@ package com.example.batiknusantara.ui.home;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -58,6 +61,17 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        // watermark
+        TextView watermark = new TextView(requireContext());
+        watermark.setText("By Nur Dwi Priyambodo\nCoreX");
+        watermark.setTextSize(10f);
+        watermark.setTextColor(getResources().getColor(R.color.dark_gray));
+        watermark.setGravity(Gravity.CENTER);
+        watermark.setPadding(0, 32, 0, 16);
+
+        LinearLayout rootLayout = (LinearLayout) binding.getRoot().findViewById(R.id.layoutHomeRoot);
+        rootLayout.addView(watermark);
 
         SessionManager sessionManager = new SessionManager(requireContext());
         String userName = sessionManager.getName();

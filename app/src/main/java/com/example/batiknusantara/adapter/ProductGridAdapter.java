@@ -1,9 +1,11 @@
 package com.example.batiknusantara.adapter;
 
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,7 +23,9 @@ import java.util.Locale;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.ViewHolder> {
+public class ProductGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final int VIEW_TYPE_PRODUCT = 0;
+    private static final int VIEW_TYPE_WATERMARK = 1;
     private List<Product> products;
     private OnItemClickListener listener;
 
@@ -34,18 +38,45 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
         this.listener = listener;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (products.get(position) == null) {
+            return VIEW_TYPE_WATERMARK;
+        }
+        return VIEW_TYPE_PRODUCT;
+    }
+
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemProductGridBinding binding = ItemProductGridBinding.inflate(
-            LayoutInflater.from(parent.getContext()), parent, false);
-        return new ViewHolder(binding);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_WATERMARK) {
+            // Watermark view
+            TextView tv = new TextView(parent.getContext());
+            tv.setText("By Nur Dwi Priyambodo\nCoreX");
+            tv.setTextSize(10f);
+            tv.setTextColor(parent.getContext().getResources().getColor(R.color.dark_gray));
+            tv.setGravity(Gravity.CENTER);
+            tv.setPadding(0, 32, 0, 32);
+            RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 24, 0, 24);
+            tv.setLayoutParams(params);
+            return new WatermarkViewHolder(tv);
+        } else {
+            ItemProductGridBinding binding = ItemProductGridBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false);
+            return new ProductViewHolder(binding);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Product product = products.get(position);
-        holder.bind(product);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (getItemViewType(position) == VIEW_TYPE_WATERMARK) {
+            // Tidak perlu bind apa-apa, sudah diatur di onCreateViewHolder
+        } else {
+            Product product = products.get(position);
+            ((ProductViewHolder) holder).bind(product);
+        }
     }
 
     @Override
@@ -58,10 +89,10 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ProductViewHolder extends RecyclerView.ViewHolder {
         private ItemProductGridBinding binding;
 
-        ViewHolder(ItemProductGridBinding binding) {
+        ProductViewHolder(ItemProductGridBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
@@ -115,6 +146,12 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
                 cartManager.addToCart(product);
                 Toast.makeText(itemView.getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
             });
+        }
+    }
+
+    class WatermarkViewHolder extends RecyclerView.ViewHolder {
+        WatermarkViewHolder(@NonNull View itemView) {
+            super(itemView);
         }
     }
 }

@@ -12,11 +12,13 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +73,15 @@ public class ProfileFragment extends Fragment {
         View root = binding.getRoot();
         sessionManager = new SessionManager(requireContext());
 
+        TextView watermark = new TextView(requireContext());
+        watermark.setText("By Nur Dwi Priyambodo\nCoreX");
+        watermark.setTextSize(10f);
+        watermark.setTextColor(getResources().getColor(R.color.dark_gray));
+        watermark.setGravity(Gravity.CENTER);
+        watermark.setPadding(0, 32, 0, 16);
+
+        LinearLayout rootLayout = (LinearLayout) binding.getRoot().findViewById(R.id.llProfile);
+        rootLayout.addView(watermark);
 
         // ApiService dengan timeout 60 detik
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
