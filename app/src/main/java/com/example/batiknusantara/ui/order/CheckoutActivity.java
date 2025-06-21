@@ -70,19 +70,34 @@ public class CheckoutActivity extends AppCompatActivity {
         apiService = ApiClient.getClient().create(ApiService.class);
         sessionManager = new SessionManager(this);
         cartManager = new CartManager(this);
-        cartItems = new ArrayList<>(cartManager.getCartItems().values());
+
+        // Cek apakah ini mode Buy Now
+        Product buyNowProduct = (Product) getIntent().getSerializableExtra("buy_now_product");
+        int buyNowQty = getIntent().getIntExtra("buy_now_quantity", 1);
+        if (buyNowProduct != null) {
+            // Mode Buy Now: hanya produk ini yang di-checkout
+            cartItems = new ArrayList<>();
+            CartManager.CartItem item = new CartManager.CartItem(buyNowProduct, buyNowQty);
+            cartItems.add(item);
+        } else {
+            // Mode normal: checkout seluruh cart
+            cartItems = new ArrayList<>(cartManager.getCartItems().values());
+        }
         setupSpinnerProvinsi();
         setupProductList();
-        // Ambil subtotal dari cart dan simpan ke field
-        subtotal = cartManager.getCartTotal();
+        // Ambil subtotal dari cartItems (bukan cartManager jika buy now)
+        subtotal = 0;
+        for (CartManager.CartItem item : cartItems) {
+            double hargaJual = item.product.getHargajual();
+            subtotal += hargaJual * item.quantity;
+        }
         updateSubtotal();
         updateTotal();
         setupCheckoutButton();
     }
 
     private void setupProductList() {
-        CartManager cartManager = new CartManager(this);
-        List<CartManager.CartItem> cartItems = new ArrayList<>(cartManager.getCartItems().values());
+        // Gunakan cartItems yang sudah di-set di onCreate
         binding.rvOrderProducts.setLayoutManager(new LinearLayoutManager(this));
         OrderProductAdapter adapter = new OrderProductAdapter(cartItems);
         binding.rvOrderProducts.setAdapter(adapter);

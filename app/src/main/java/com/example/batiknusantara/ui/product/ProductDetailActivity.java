@@ -1,5 +1,6 @@
 package com.example.batiknusantara.ui.product;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -121,10 +122,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
 
         binding.btnBuyNow.setOnClickListener(v -> {
-            CartManager cartManager = new CartManager(this);
-            cartManager.addToCart(currentProduct);
-            // TODO: Navigate to cart/checkout
-            Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
+            // Buy Now: langsung checkout produk ini saja
+            Intent intent = new Intent(this, com.example.batiknusantara.ui.order.CheckoutActivity.class);
+            intent.putExtra("buy_now_product", currentProduct);
+            intent.putExtra("buy_now_quantity", 1);
+            startActivity(intent);
         });
     }
 
