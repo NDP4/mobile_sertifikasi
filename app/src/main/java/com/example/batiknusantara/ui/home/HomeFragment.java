@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +63,48 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // Tambahkan CardView welcome secara dinamis
+        LinearLayout rootLayout = (LinearLayout) binding.getRoot().findViewById(R.id.layoutHomeRoot);
+        // Buat CardView
+        androidx.cardview.widget.CardView cardView = new androidx.cardview.widget.CardView(requireContext());
+        LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        cardParams.setMargins(16, 16, 16, 8); // margin bottom diubah dari 16 ke 8 agar tidak terlalu jauh
+        cardView.setLayoutParams(cardParams);
+        cardView.setCardElevation(4f);
+        cardView.setRadius(16f);
+        cardView.setUseCompatPadding(true);
+
+        // Buat LinearLayout horizontal
+        LinearLayout linear = new LinearLayout(requireContext());
+        linear.setOrientation(LinearLayout.HORIZONTAL);
+        linear.setPadding(24, 24, 24, 24);
+        linear.setGravity(Gravity.CENTER_VERTICAL);
+
+        // Icon
+        ImageView icon = new ImageView(requireContext());
+        icon.setImageResource(R.drawable.ic_person);
+        LinearLayout.LayoutParams iconParams = new LinearLayout.LayoutParams(48, 48);
+        iconParams.setMargins(0, 0, 16, 0);
+        icon.setLayoutParams(iconParams);
+        icon.setColorFilter(getResources().getColor(R.color.primary));
+
+        // Text
+        SessionManager sessionManager = new SessionManager(requireContext());
+        String userName = sessionManager.getName();
+        TextView tv = new TextView(requireContext());
+        tv.setText("Selamat datang: " + (userName != null ? userName : "-"));
+        tv.setTextSize(14f);
+        tv.setTextColor(getResources().getColor(R.color.text_primary));
+        tv.setTypeface(tv.getTypeface(), android.graphics.Typeface.BOLD);
+        tv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        linear.addView(icon);
+        linear.addView(tv);
+        cardView.addView(linear);
+        // Tambahkan CardView di posisi setelah banner (index 1)
+        rootLayout.addView(cardView, 1);
+
         // watermark
         TextView watermark = new TextView(requireContext());
         watermark.setText("By Nur Dwi Priyambodo\nCoreX");
@@ -69,13 +112,7 @@ public class HomeFragment extends Fragment {
         watermark.setTextColor(getResources().getColor(R.color.dark_gray));
         watermark.setGravity(Gravity.CENTER);
         watermark.setPadding(0, 32, 0, 16);
-
-        LinearLayout rootLayout = (LinearLayout) binding.getRoot().findViewById(R.id.layoutHomeRoot);
         rootLayout.addView(watermark);
-
-        SessionManager sessionManager = new SessionManager(requireContext());
-        String userName = sessionManager.getName();
-        binding.tvWelcome.setText("Selamat datang: " + (userName != null ? userName : "-"));
 
         setupBannerSlider();
         setupCategories();
