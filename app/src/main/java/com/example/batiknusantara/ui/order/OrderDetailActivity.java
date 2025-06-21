@@ -2,7 +2,6 @@ package com.example.batiknusantara.ui.order;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +29,6 @@ public class OrderDetailActivity extends AppCompatActivity {
     private List<Product> productList = new ArrayList<>();
     private List<Integer> qtyList = new ArrayList<>();
     private List<Double> bayarList = new ArrayList<>();
-    ImageButton btnBack;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,9 +36,8 @@ public class OrderDetailActivity extends AppCompatActivity {
         binding = ActivityOrderDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Set up back button
-        btnBack = binding.toolbar.findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        // Set up back button (gunakan navigationIcon Toolbar)
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

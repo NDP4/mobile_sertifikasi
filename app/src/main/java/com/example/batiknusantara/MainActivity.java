@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_home, R.id.navigation_product, R.id.navigation_profile, R.id.navigation_order)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        // Hapus action bar agar fragment tidak ada topbar
+        // NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration); // DIHAPUS
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         // Handle navigation to profile
