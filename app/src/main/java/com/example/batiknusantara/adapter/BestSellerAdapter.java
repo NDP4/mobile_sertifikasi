@@ -101,6 +101,7 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Vi
                 binding.tvOriginalPrice.setVisibility(View.GONE);
             }
             binding.tvStock.setText("Stok: " + product.getStok());
+            binding.tvViewCount.setText("Dilihat: " + product.getView_count() + "x");
 
             // Load image with error handling
             Glide.with(itemView.getContext())

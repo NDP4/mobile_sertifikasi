@@ -16,6 +16,7 @@ public class Product implements Serializable {
     private String foto;
     private String deskripsi;
     private String foto_url;
+    private int view_count;
 
     // Getters
     public String getKode() { return kode; }
@@ -31,6 +32,7 @@ public class Product implements Serializable {
     public String getFoto() { return foto; }
     public String getDeskripsi() { return deskripsi; }
     public String getFoto_url() { return foto_url; }
+    public int getView_count() { return view_count; }
 
     // Setters
     public void setKode(String kode) { this.kode = kode; }
@@ -46,4 +48,5 @@ public class Product implements Serializable {
     public void setFoto(String foto) { this.foto = foto; }
     public void setDeskripsi(String deskripsi) { this.deskripsi = deskripsi; }
     public void setFoto_url(String foto_url) { this.foto_url = foto_url; }
+    public void setView_count(int view_count) { this.view_count = view_count; }
 }

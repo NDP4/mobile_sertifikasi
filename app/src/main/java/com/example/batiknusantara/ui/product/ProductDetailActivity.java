@@ -50,6 +50,18 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void loadProductDetail(String productId) {
+        // Tambahkan request untuk increment view_count
+        apiService.incrementProductView("view", productId).enqueue(new retrofit2.Callback<com.example.batiknusantara.api.response.BaseResponse>() {
+            @Override
+            public void onResponse(Call<com.example.batiknusantara.api.response.BaseResponse> call, Response<com.example.batiknusantara.api.response.BaseResponse> response) {
+                // Tidak perlu aksi, hanya untuk increment
+            }
+            @Override
+            public void onFailure(Call<com.example.batiknusantara.api.response.BaseResponse> call, Throwable t) {
+                // Tidak perlu aksi
+            }
+        });
+
         apiService.getProductDetail(productId).enqueue(new Callback<ProductDetailResponse>() {
             @Override
             public void onResponse(Call<ProductDetailResponse> call, Response<ProductDetailResponse> response) {
@@ -73,6 +85,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.tvProductName.setText(product.getMerk());
         binding.tvCategory.setText(product.getKategori());
         binding.tvStock.setText("Stock: " + product.getStok());
+        binding.tvViewCount.setText("Dilihat: " + product.getView_count() + "x");
         binding.tvDescription.setText(product.getDeskripsi());
         this.currentProduct = product;
 

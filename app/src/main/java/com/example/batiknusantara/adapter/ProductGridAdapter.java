@@ -130,6 +130,7 @@ public class ProductGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 binding.tvOriginalPrice.setVisibility(View.GONE);
             }
             binding.tvStock.setText("Stok: " + product.getStok());
+            binding.tvViewCount.setText("Dilihat: " + product.getView_count() + "x");
             Glide.with(itemView.getContext())
                 .load(product.getFoto_url())
                 .placeholder(R.drawable.ic_product_placeholder)
