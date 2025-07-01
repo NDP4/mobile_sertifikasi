@@ -136,41 +136,44 @@
                         android:textColorHint="@color/dark_gray"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Provinsi -->
-                <TextView
+                <!-- Destinasi -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDestination"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pilih Provinsi"
-                    android:textColor="@color/dark_gray"
-                    android:textSize="14sp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="2dp"/>
-                <Spinner
-                    android:id="@+id/spinnerProvinsi"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:spinnerMode="dropdown"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    android:hint="Pilih atau cari destinasi">
 
-                <!-- Kota/Kabupaten -->
+                    <AutoCompleteTextView
+                        android:id="@+id/actvDestination"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:inputType="text" 
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:textSize="16sp"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Fallback Spinner -->
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pilih Kota/Kabupaten"
-                    android:textColor="@color/dark_gray"
-                    android:textSize="14sp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="2dp"/>
+                    android:text="Atau pilih dari daftar:"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:textSize="14sp"/>
+
                 <Spinner
-                    android:id="@+id/spinnerKota"
+                    android:id="@+id/spinnerDestination"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
+                    android:background="@drawable/bg_suggestion_dropdown"
                     android:spinnerMode="dropdown"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="16dp"
+                    android:padding="8dp"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
