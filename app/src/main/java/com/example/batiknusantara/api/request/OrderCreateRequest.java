@@ -4,6 +4,7 @@ import java.util.List;
 
 public class OrderCreateRequest {
     public String email;
+    public String nama_penerima;
     public double subtotal;
     public double ongkir;
     public double total_bayar;

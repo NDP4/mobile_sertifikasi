@@ -538,6 +538,7 @@ public class CheckoutActivity extends AppCompatActivity {
             request.total_bayar = subtotal + ongkir; // Total yang harus dibayar
             request.alamat_kirim = binding.etAlamat.getText().toString(); // Alamat pengiriman dari input user
             request.telp_kirim = binding.etTelp.getText().toString(); // Nomor telepon dari input user
+            request.nama_penerima = binding.etNamaPenerima.getText().toString(); // Nama penerima dari input user
             // Isi data kota dan provinsi dari destinasi yang dipilih
             request.kota = selectedDestination != null ? selectedDestination.city_name : ""; // Nama kota dari destinasi
             request.provinsi = selectedDestination != null ? selectedDestination.province_name : ""; // Nama provinsi dari destinasi

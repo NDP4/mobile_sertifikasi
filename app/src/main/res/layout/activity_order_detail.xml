@@ -155,6 +155,16 @@
                     android:letterSpacing="0.1" />
 
                 <TextView
+                    android:id="@+id/tvOrderNamaPenerima"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Nama Penerima: John Doe"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/tvOrderAlamat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

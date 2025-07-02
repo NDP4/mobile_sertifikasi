@@ -9,6 +9,7 @@ public class OrderHistoryResponse {
     public static class OrderData implements Serializable {
         public int trans_id;
         public String email;
+        public String nama_penerima;
         public String tgl_order;
         public double subtotal;
         public double ongkir;

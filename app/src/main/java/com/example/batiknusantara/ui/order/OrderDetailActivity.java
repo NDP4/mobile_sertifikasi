@@ -64,12 +64,14 @@ public class OrderDetailActivity extends AppCompatActivity {
         symbols.setCurrencySymbol(formattedSymbol);
         ((java.text.DecimalFormat) formatter).setDecimalFormatSymbols(symbols);
 
+        // setting order details
         binding.tvOrderId.setText("Order ID: " + order.trans_id);
         binding.tvOrderDate.setText("Tanggal: " + order.tgl_order);
         binding.tvOrderStatus.setText("Status: " + getStatusText(order.status));
         binding.tvOrderSubtotal.setText(formatter.format(order.subtotal));
         binding.tvOrderOngkir.setText(formatter.format(order.ongkir));
         binding.tvOrderTotal.setText(formatter.format(order.total_bayar));
+        binding.tvOrderNamaPenerima.setText("Nama Penerima: " + order.nama_penerima);
         binding.tvOrderAlamat.setText("Alamat: " + order.alamat_kirim);
         binding.tvOrderTelp.setText("Telp: " + order.telp_kirim);
         binding.tvOrderKota.setText("Kota: " + order.kota);
