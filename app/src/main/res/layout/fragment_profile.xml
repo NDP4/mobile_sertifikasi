@@ -90,8 +90,8 @@
                 android:text="Logout"
                 android:textAllCaps="false"
                 style="@style/Widget.MaterialComponents.Button"
-                android:backgroundTint="@color/primary"
-                android:textColor="@color/white"
+                android:backgroundTint="@color/background_button"
+                android:textColor="@color/text_button"
                 app:icon="@drawable/ic_logout"
                 app:iconPadding="8dp"/>
         </LinearLayout>
