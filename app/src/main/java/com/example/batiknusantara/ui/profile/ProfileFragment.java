@@ -107,11 +107,11 @@ public class ProfileFragment extends Fragment {
 
         // Info user
         String name = sessionManager.getName();
-        String email = sessionManager.getEmail();
+//        String email = sessionManager.getEmail();
         if (name != null && !name.isEmpty()) {
-            binding.tvUserInfo.setText("Login sebagai: " + email);
+            binding.tvUserInfo.setText("Login sebagai: " + name);
         } else {
-            binding.tvUserInfo.setText("Login sebagai: " + email);
+//            binding.tvUserInfo.setText("Login sebagai: " + email);
         }
 
         // Lokasi

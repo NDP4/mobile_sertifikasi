@@ -206,8 +206,11 @@
                     android:id="@+id/rvOrderProducts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:layout_marginBottom="16dp"/>
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_order_product"
+                    android:nestedScrollingEnabled="true"
+                    android:layout_marginBottom="16dp"
+                    android:overScrollMode="never"/>
 
 
                 <!-- Payment Method -->

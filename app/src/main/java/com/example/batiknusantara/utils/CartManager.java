@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -72,13 +73,40 @@ public class CartManager {
     public Map<String, CartItem> getCartItems() {
         String cartJson = pref.getString(getCartKey(), "");
         Type type = new TypeToken<Map<String, CartItem>>(){}.getType();
-        Map<String, CartItem> cartItems = gson.fromJson(cartJson, type);
-        return cartItems != null ? cartItems : new HashMap<>();
+        Map<String, CartItem> cartItems;
+        try {
+            cartItems = gson.fromJson(cartJson, type);
+            if (cartItems == null) {
+                cartItems = new HashMap<>();
+            }
+            // Validasi setiap item dalam cart
+            Iterator<Map.Entry<String, CartItem>> iterator = cartItems.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, CartItem> entry = iterator.next();
+                if (entry.getValue() == null || entry.getValue().product == null) {
+                    iterator.remove();
+                }
+            }
+        } catch (Exception e) {
+            cartItems = new HashMap<>();
+        }
+        return cartItems;
     }
 
     private void saveCartItems(Map<String, CartItem> cartItems) {
-        String cartJson = gson.toJson(cartItems);
-        pref.edit().putString(getCartKey(), cartJson).apply();
+        try {
+            // Validasi sebelum save
+            Map<String, CartItem> validCart = new HashMap<>();
+            for (Map.Entry<String, CartItem> entry : cartItems.entrySet()) {
+                if (entry.getValue() != null && entry.getValue().product != null) {
+                    validCart.put(entry.getKey(), entry.getValue());
+                }
+            }
+            String cartJson = gson.toJson(validCart);
+            pref.edit().putString(getCartKey(), cartJson).apply();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void clearCart() {

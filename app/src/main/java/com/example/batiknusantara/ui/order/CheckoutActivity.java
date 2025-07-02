@@ -486,10 +486,20 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void setupProductList() {
-        // Gunakan cartItems yang sudah di-set di onCreate
+        // Debug log untuk melihat jumlah item
+        Log.d("CheckoutActivity", "Cart items size: " + cartItems.size());
+        for (CartManager.CartItem item : cartItems) {
+            Log.d("CheckoutActivity", "Product in cart: " + item.product.getMerk() + ", qty: " + item.quantity);
+        }
+        
+        // Setup RecyclerView dengan fixed size untuk performa
+        binding.rvOrderProducts.setHasFixedSize(true);
         binding.rvOrderProducts.setLayoutManager(new LinearLayoutManager(this));
         OrderProductAdapter adapter = new OrderProductAdapter(cartItems);
         binding.rvOrderProducts.setAdapter(adapter);
+        
+        // Notify adapter
+        adapter.notifyDataSetChanged();
     }
 
     private void updateSubtotal() {

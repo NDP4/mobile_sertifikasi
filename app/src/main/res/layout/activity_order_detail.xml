@@ -236,8 +236,10 @@
                     android:id="@+id/rvOrderProducts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    tools:itemCount="5"
                     android:layout_marginTop="8dp"
-                    android:nestedScrollingEnabled="false"
+                    android:nestedScrollingEnabled="true"
+                    android:overScrollMode="never"
                     tools:listitem="@layout/item_order_product" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
