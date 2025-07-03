@@ -298,6 +298,14 @@ public class ProductFragment extends Fragment {
         });
     }
 
+    public void applyFilter(String kategori) {
+        this.filterKategori = kategori;
+        if (filterKategori != null) {
+            binding.btnResetFilter.setVisibility(View.VISIBLE);
+            filterProducts(binding.searchViewProduk.getQuery().toString());
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

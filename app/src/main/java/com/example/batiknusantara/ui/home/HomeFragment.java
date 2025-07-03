@@ -31,6 +31,7 @@ import com.example.batiknusantara.model.CategoryModel;
 import com.example.batiknusantara.model.Product;
 import com.example.batiknusantara.ui.product.ProductFragment;
 import com.example.batiknusantara.utils.SessionManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 import java.util.ArrayList;
@@ -63,6 +64,25 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // Set nama user pada header kiri
+        SessionManager sessionManager = new SessionManager(requireContext());
+        String userName = sessionManager.getName();
+        TextView tvUserName = root.findViewById(R.id.user_name);
+        if (userName != null && !userName.isEmpty()) {
+            tvUserName.setText(userName);
+        } else {
+            tvUserName.setText("-");
+        }
+
+        // Badge cart count
+        updateCartBadge();
+        ImageView btnCart = root.findViewById(R.id.btnCart);
+        btnCart.setOnClickListener(v -> {
+            // Navigasi ke OrderFragment menggunakan bottom navigation
+            BottomNavigationView bottomNav = requireActivity().findViewById(R.id.nav_view);
+            bottomNav.setSelectedItemId(R.id.navigation_order);
+        });
+
         // Tambahkan CardView welcome secara dinamis
         LinearLayout rootLayout = (LinearLayout) binding.getRoot().findViewById(R.id.layoutHomeRoot);
         // Buat CardView
@@ -90,20 +110,18 @@ public class HomeFragment extends Fragment {
         icon.setColorFilter(getResources().getColor(R.color.primary));
 
         // Text
-        SessionManager sessionManager = new SessionManager(requireContext());
-        String userName = sessionManager.getName();
-        TextView tv = new TextView(requireContext());
-        tv.setText("Selamat datang: " + (userName != null ? userName : "-"));
-        tv.setTextSize(14f);
-        tv.setTextColor(getResources().getColor(R.color.text_primary));
-        tv.setTypeface(tv.getTypeface(), android.graphics.Typeface.BOLD);
-        tv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//        TextView tv = new TextView(requireContext());
+//        tv.setText("Selamat datang: " + (userName != null ? userName : "-"));
+//        tv.setTextSize(14f);
+//        tv.setTextColor(getResources().getColor(R.color.text_primary));
+//        tv.setTypeface(tv.getTypeface(), android.graphics.Typeface.BOLD);
+//        tv.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        linear.addView(icon);
-        linear.addView(tv);
-        cardView.addView(linear);
+//        linear.addView(icon);
+//        linear.addView(tv);
+//        cardView.addView(linear);
         // Tambahkan CardView di posisi setelah banner (index 1)
-        rootLayout.addView(cardView, 1);
+//        rootLayout.addView(cardView, 1);
 
         // watermark
         TextView watermark = new TextView(requireContext());
@@ -150,7 +168,7 @@ public class HomeFragment extends Fragment {
             navController.navigate(R.id.navigation_product, bundle);
         });
         binding.rvCategories.setLayoutManager(
-            new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+                new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.rvCategories.setAdapter(categoryAdapter);
     }
 
@@ -158,8 +176,12 @@ public class HomeFragment extends Fragment {
         bestSellerAdapter = new BestSellerAdapter(new ArrayList<>(), new BestSellerAdapter.OnItemClickListener() {
             @Override
             public void onCartClick(Product product) {
-                // TODO: Implement cart click
+                // Tambahkan ke cart
+                com.example.batiknusantara.utils.CartManager cartManager = new com.example.batiknusantara.utils.CartManager(requireContext());
+                cartManager.addToCart(product);
                 Toast.makeText(requireContext(), "Added to cart: " + product.getMerk(), Toast.LENGTH_SHORT).show();
+                // Update badge secara reaktif
+                updateCartBadge();
             }
 
             @Override
@@ -170,7 +192,7 @@ public class HomeFragment extends Fragment {
         });
         binding.rvBestSellers.setAdapter(bestSellerAdapter);
         binding.rvBestSellers.setLayoutManager(
-            new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+                new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void loadCategories() {
@@ -230,6 +252,22 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         sliderHandler.postDelayed(sliderRunnable, 3000);
+        updateCartBadge();
+    }
+
+    private void updateCartBadge() {
+        if (binding == null) return;
+        TextView badge = binding.getRoot().findViewById(R.id.badgeCartCount);
+        com.example.batiknusantara.utils.CartManager cartManager = new com.example.batiknusantara.utils.CartManager(requireContext());
+        int count = cartManager.getCartItemCount();
+        if (badge != null) {
+            if (count > 0) {
+                badge.setText(String.valueOf(count));
+                badge.setVisibility(View.VISIBLE);
+            } else {
+                badge.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override

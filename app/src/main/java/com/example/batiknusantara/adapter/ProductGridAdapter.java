@@ -147,6 +147,12 @@ public class ProductGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 cartManager.addToCart(product);
                 Toast.makeText(itemView.getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
             });
+            // Tambahkan click pada seluruh item agar buka detail
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(itemView.getContext(), ProductDetailActivity.class);
+                intent.putExtra("product_id", product.getKode());
+                itemView.getContext().startActivity(intent);
+            });
         }
     }
 

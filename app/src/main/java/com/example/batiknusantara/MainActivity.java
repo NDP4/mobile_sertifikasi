@@ -10,6 +10,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.example.batiknusantara.databinding.ActivityMainBinding;
 import com.example.batiknusantara.utils.SessionManager;
+import androidx.fragment.app.Fragment;
+import com.example.batiknusantara.ui.product.ProductFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,13 +37,30 @@ public class MainActivity extends AppCompatActivity {
         // NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration); // DIHAPUS
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        // Handle navigation to profile
+        // Handle navigation dan filter kategori
         navView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.navigation_profile && !sessionManager.isLoggedIn()) {
                 Intent intent = new Intent(this, com.example.batiknusantara.ui.auth.LoginActivity.class);
                 startActivity(intent);
                 return false;
             }
+
+            // Tunggu fragment berubah sebelum mengatur filter
+            navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+                if (destination.getId() == R.id.navigation_product) {
+                    Fragment currentFragment = getSupportFragmentManager()
+                        .findFragmentById(R.id.nav_host_fragment_activity_main)
+                        .getChildFragmentManager()
+                        .getFragments().get(0);
+                    
+                    if (currentFragment instanceof ProductFragment && currentFragment.getArguments() != null) {
+                        ((ProductFragment) currentFragment).applyFilter(
+                            currentFragment.getArguments().getString("filter_kategori")
+                        );
+                    }
+                }
+            });
+
             return NavigationUI.onNavDestinationSelected(item, navController);
         });
     }

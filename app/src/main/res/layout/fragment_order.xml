@@ -45,6 +45,7 @@
         android:text="Checkout"
         android:backgroundTint="@color/background_button"
         android:textColor="@color/text_button"
+        android:textSize="14sp"
         app:cornerRadius="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
