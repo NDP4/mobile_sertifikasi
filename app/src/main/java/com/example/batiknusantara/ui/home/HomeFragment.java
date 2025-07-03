@@ -17,6 +17,7 @@ import androidx.navigation.NavOptions;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.batiknusantara.MainActivity;
 import com.example.batiknusantara.R;
 import com.example.batiknusantara.adapter.BannerAdapter;
 import com.example.batiknusantara.adapter.BestSellerAdapter;
@@ -31,6 +32,7 @@ import com.example.batiknusantara.model.CategoryModel;
 import com.example.batiknusantara.model.Product;
 import com.example.batiknusantara.ui.product.ProductFragment;
 import com.example.batiknusantara.utils.SessionManager;
+import com.example.batiknusantara.utils.CartUpdateListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -41,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements CartUpdateListener {
 
     private FragmentHomeBinding binding;
     private BannerAdapter bannerAdapter;
@@ -63,6 +65,7 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        ((MainActivity) requireActivity()).setCartUpdateListener(this);
 
         // Set nama user pada header kiri
         SessionManager sessionManager = new SessionManager(requireContext());
@@ -274,6 +277,11 @@ public class HomeFragment extends Fragment {
     public void onPause() {
         super.onPause();
         sliderHandler.removeCallbacks(sliderRunnable);
+    }
+
+    @Override
+    public void onCartUpdated() {
+        updateCartBadge();
     }
 
     @Override

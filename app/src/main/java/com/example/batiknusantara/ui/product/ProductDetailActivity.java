@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
+import com.example.batiknusantara.MainActivity;
 import com.example.batiknusantara.R;
 import com.example.batiknusantara.api.ApiClient;
 import com.example.batiknusantara.api.ApiService;
@@ -132,6 +133,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             CartManager cartManager = new CartManager(this);
             cartManager.addToCart(currentProduct);
             Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
+            // Update badge cart
+            MainActivity.updateCartBadgeStatic();
         });
 
         binding.btnBuyNow.setOnClickListener(v -> {

@@ -2,6 +2,11 @@ package com.example.batiknusantara;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+import com.example.batiknusantara.utils.CartManager;
+import com.example.batiknusantara.utils.CartUpdateListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -13,11 +18,14 @@ import com.example.batiknusantara.utils.SessionManager;
 import androidx.fragment.app.Fragment;
 import com.example.batiknusantara.ui.product.ProductFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CartUpdateListener {
 
     private ActivityMainBinding binding;
     private SessionManager sessionManager;
     private NavController navController;
+    private TextView badgeCartCount; // Add field for badge
+
+    private static CartUpdateListener cartUpdateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         
         sessionManager = new SessionManager(this);
+        badgeCartCount = findViewById(R.id.badgeCartCount); // Initialize badge view
+        updateCartBadge(); // Initial badge update
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -63,6 +73,37 @@ public class MainActivity extends AppCompatActivity {
 
             return NavigationUI.onNavDestinationSelected(item, navController);
         });
+
+        cartUpdateListener = this;
+    }
+
+    // Add method to update cart badge
+    public void updateCartBadge() {
+        if (badgeCartCount != null) {
+            CartManager cartManager = new CartManager(this);
+            int count = cartManager.getCartItemCount();
+            if (count > 0) {
+                badgeCartCount.setText(String.valueOf(count));
+                badgeCartCount.setVisibility(View.VISIBLE);
+            } else {
+                badgeCartCount.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    public static void updateCartBadgeStatic() {
+        if (cartUpdateListener != null) {
+            cartUpdateListener.onCartUpdated();
+        }
+    }
+
+    @Override
+    public void onCartUpdated() {
+        updateCartBadge();
+    }
+
+    public void setCartUpdateListener(CartUpdateListener listener) {
+        cartUpdateListener = listener;
     }
 
     @Override
