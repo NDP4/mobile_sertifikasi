@@ -111,15 +111,22 @@ public class OrderFragment extends Fragment {
 
     private void setupClearCartButton() {
         binding.ivClearCart.setOnClickListener(v -> {
-            new android.app.AlertDialog.Builder(requireContext())
-                .setTitle("Kosongkan Keranjang")
-                .setMessage("Apakah Anda yakin ingin mengosongkan seluruh keranjang?")
-                .setPositiveButton("Ya", (dialog, which) -> {
-                    cartManager.clearCart();
-                    loadCart();
-                })
-                .setNegativeButton("Batal", null)
-                .show();
+            android.app.Dialog dialog = new android.app.Dialog(requireContext());
+            dialog.setContentView(R.layout.dialog_clear_cart);
+            dialog.setCancelable(true);
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            com.airbnb.lottie.LottieAnimationView lottieView = dialog.findViewById(R.id.lottieClearCart);
+            lottieView.setAnimation(R.raw.clear_cart); // Make sure you have clear_cart.json in res/raw
+            lottieView.playAnimation();
+            TextView tvMessage = dialog.findViewById(R.id.tvClearCartMessage);
+            tvMessage.setText("Apakah Anda yakin ingin mengosongkan seluruh keranjang?");
+            dialog.findViewById(R.id.btnCancelClearCart).setOnClickListener(btn -> dialog.dismiss());
+            dialog.findViewById(R.id.btnConfirmClearCart).setOnClickListener(btn -> {
+                cartManager.clearCart();
+                loadCart();
+                dialog.dismiss();
+            });
+            dialog.show();
         });
     }
 

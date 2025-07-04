@@ -26,8 +26,8 @@
             android:paddingEnd="4dp">
             <ImageView
                 android:id="@+id/ivAppLogo"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:contentDescription="Logo"
                 android:layout_gravity="center_vertical"/>
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 android:text="Keranjang"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/primary"
                 android:gravity="center"/>
             <ImageView

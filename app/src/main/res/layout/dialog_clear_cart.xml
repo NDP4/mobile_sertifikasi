@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="24dp"
+    android:background="@drawable/bg_dialog_rounded">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieClearCart"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        app:lottie_rawRes="@raw/clear_cart"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
+    <TextView
+        android:id="@+id/tvClearCartMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apakah Anda yakin ingin mengosongkan seluruh keranjang?"
+        android:textAlignment="center"
+        android:textColor="@color/primary"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+        <Button
+            android:id="@+id/btnCancelClearCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/background_button"
+            android:text="Batal" />
+        <Button
+            android:id="@+id/btnConfirmClearCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/primary"
+            android:textColor="@android:color/white"
+            android:text="Ya" />
+    </LinearLayout>
+</LinearLayout>
