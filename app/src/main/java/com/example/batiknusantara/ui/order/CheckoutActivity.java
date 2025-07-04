@@ -201,18 +201,18 @@ public class CheckoutActivity extends AppCompatActivity {
         // Setup Spinner untuk pilihan destinasi alternatif
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, destinationLabelList);
-        binding.spinnerDestination.setAdapter(spinnerAdapter);
-        binding.spinnerDestination.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedLabel = parent.getItemAtPosition(position).toString(); // Ambil destinasi yang dipilih
-                updateSelectedDestination(selectedLabel); // Update destinasi terpilih
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Method ini dipanggil ketika tidak ada yang dipilih (tidak digunakan)
-            }
-        });
+//        binding.spinnerDestination.setAdapter(spinnerAdapter);
+//        binding.spinnerDestination.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String selectedLabel = parent.getItemAtPosition(position).toString(); // Ambil destinasi yang dipilih
+//                updateSelectedDestination(selectedLabel); // Update destinasi terpilih
+//            }
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//                // Method ini dipanggil ketika tidak ada yang dipilih (tidak digunakan)
+//            }
+//        });
     }
 
     /**
@@ -385,7 +385,7 @@ public class CheckoutActivity extends AppCompatActivity {
         binding.actvDestination.setText(selectedLabel, false);
         int spinnerPosition = destinationLabelList.indexOf(selectedLabel);
         if (spinnerPosition >= 0) {
-            binding.spinnerDestination.setSelection(spinnerPosition);
+//            binding.spinnerDestination.setSelection(spinnerPosition);
         }
 
         // Hitung ongkir dengan JNE untuk destinasi yang dipilih
@@ -416,13 +416,13 @@ public class CheckoutActivity extends AppCompatActivity {
         }
 
         // Cache expired atau kosong, fetch dari API dengan keyword "ja" sebagai data awal
-        binding.spinnerDestination.setEnabled(false);
+//        binding.spinnerDestination.setEnabled(false);
         binding.actvDestination.setEnabled(false);
 
         rajaOngkirService.searchDestinations("cities", "ja").enqueue(new Callback<DestinationResponse>() {
             @Override
             public void onResponse(Call<DestinationResponse> call, Response<DestinationResponse> response) {
-                binding.spinnerDestination.setEnabled(true);
+//                binding.spinnerDestination.setEnabled(true);
                 binding.actvDestination.setEnabled(true);
 
                 if (response.isSuccessful() && response.body() != null &&
@@ -454,7 +454,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<DestinationResponse> call, Throwable t) {
-                binding.spinnerDestination.setEnabled(true);
+//                binding.spinnerDestination.setEnabled(true);
                 binding.actvDestination.setEnabled(true);
                 Log.e("CheckoutActivity", "Network error: " + t.getMessage());
                 Toasty.error(CheckoutActivity.this, "Gagal memuat data: " + t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -475,7 +475,7 @@ public class CheckoutActivity extends AppCompatActivity {
         // Update spinner
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, destinationLabelList);
-        binding.spinnerDestination.setAdapter(spinnerAdapter);
+//        binding.spinnerDestination.setAdapter(spinnerAdapter);
         spinnerAdapter.notifyDataSetChanged();
 
         // Update autocomplete

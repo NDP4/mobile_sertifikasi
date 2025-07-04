@@ -1,52 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:background="@color/white">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingBottom="8dp"/>
-
+    <!-- Main content: header + cart list -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end"
-        android:padding="8dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:clipToPadding="false">
 
-        <TextView
-            android:id="@+id/tvSubtotalLabel"
-            android:layout_width="wrap_content"
+        <!-- Header with logo, title, and clear cart icon -->
+        <LinearLayout
+            android:id="@+id/header_cart"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Subtotal: "
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="12dp"
+            android:paddingTop="4dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
+            <ImageView
+                android:id="@+id/ivAppLogo"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:contentDescription="Logo"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/tvCartTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Keranjang"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/primary"
+                android:gravity="center"/>
+            <ImageView
+                android:id="@+id/ivClearCart"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_clear"
+                android:contentDescription="Kosongkan Keranjang"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="6dp"
+                android:tint="@color/primary"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvSubtotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/primary"
-            android:layout_marginStart="8dp"/>
-
+        <!-- Cart list, scrollable -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:padding="8dp"
+            android:overScrollMode="always"/>
     </LinearLayout>
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCheckout"
+
+    <!-- Sticky bottom bar: subtotal + checkout -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Checkout"
-        android:backgroundTint="@color/background_button"
-        android:textColor="@color/text_button"
-        android:textSize="14sp"
-        app:cornerRadius="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
-</LinearLayout>
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="0dp"
+        android:gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|end"
+            android:paddingBottom="8dp">
+            <TextView
+                android:id="@+id/tvSubtotalLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subtotal: "
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/tvSubtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/primary"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Checkout"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/primary"
+            app:cornerRadius="8dp"
+            android:icon="@drawable/ic_order_black_24dp"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"/>
+    </LinearLayout>
+
+</FrameLayout>

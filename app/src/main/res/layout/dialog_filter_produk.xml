@@ -1,39 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_margin="8dp"
+    android:backgroundTint="@android:color/white">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Kategori"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerKategori"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Urutkan/Filter"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
+        <!-- Kategori Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_category_default"
+                android:tint="@color/primary"
+                android:layout_marginEnd="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kategori"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/primary"/>
+        </LinearLayout>
+        <Spinner
+            android:id="@+id/spinnerKategori"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
 
-    <RadioGroup
-        android:id="@+id/rgSort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RadioButton android:id="@+id/rbTerbaru" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Terbaru"/>
-        <RadioButton android:id="@+id/rbHargaTerendah" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Harga Terendah"/>
-        <RadioButton android:id="@+id/rbHargaTertinggi" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Harga Tertinggi"/>
-        <RadioButton android:id="@+id/rbAZ" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="A-Z"/>
-        <RadioButton android:id="@+id/rbDiskon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Diskon"/>
-        <RadioButton android:id="@+id/rbTanpaDiskon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tanpa Diskon"/>
-    </RadioGroup>
-</LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Urutkan/Filter Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_sort"
+                android:tint="@color/primary"
+                android:layout_marginEnd="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Urutkan/Filter"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/primary"/>
+        </LinearLayout>
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerThickness="1dp"
+            app:dividerColor="@color/divider"/>
+        <RadioGroup
+            android:id="@+id/rgSort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.radiobutton.MaterialRadioButton android:id="@+id/rbTerbaru" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Terbaru"/>
+            <com.google.android.material.radiobutton.MaterialRadioButton android:id="@+id/rbHargaTerendah" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Harga Terendah"/>
+            <com.google.android.material.radiobutton.MaterialRadioButton android:id="@+id/rbHargaTertinggi" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Harga Tertinggi"/>
+            <com.google.android.material.radiobutton.MaterialRadioButton android:id="@+id/rbAZ" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="A-Z"/>
+            <com.google.android.material.radiobutton.MaterialRadioButton android:id="@+id/rbDiskon" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Diskon"/>
+            <com.google.android.material.radiobutton.MaterialRadioButton android:id="@+id/rbTanpaDiskon" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Tanpa Diskon"/>
+        </RadioGroup>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

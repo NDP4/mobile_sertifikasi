@@ -39,6 +39,7 @@ public class OrderFragment extends Fragment {
         sessionManager = new SessionManager(requireContext());
         setupRecyclerView();
         setupCheckoutButton();
+        setupClearCartButton();
         loadCart();
         return binding.getRoot();
     }
@@ -53,6 +54,12 @@ public class OrderFragment extends Fragment {
         List<CartManager.CartItem> cartList = new ArrayList<>(cartManager.getCartItems().values());
         cartAdapter.updateCart(cartList);
         updateSubtotal();
+        // Show/hide clear cart icon, but keep header title centered
+        if (cartList.isEmpty()) {
+            binding.ivClearCart.setVisibility(View.INVISIBLE); // keep space
+        } else {
+            binding.ivClearCart.setVisibility(View.VISIBLE);
+        }
     }
 
     private void onCartChanged() {
@@ -99,6 +106,20 @@ public class OrderFragment extends Fragment {
                 Intent intent = new Intent(requireContext(), CheckoutActivity.class);
                 startActivity(intent);
             }
+        });
+    }
+
+    private void setupClearCartButton() {
+        binding.ivClearCart.setOnClickListener(v -> {
+            new android.app.AlertDialog.Builder(requireContext())
+                .setTitle("Kosongkan Keranjang")
+                .setMessage("Apakah Anda yakin ingin mengosongkan seluruh keranjang?")
+                .setPositiveButton("Ya", (dialog, which) -> {
+                    cartManager.clearCart();
+                    loadCart();
+                })
+                .setNegativeButton("Batal", null)
+                .show();
         });
     }
 
