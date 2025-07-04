@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.example.batiknusantara.R;
 import com.example.batiknusantara.adapter.CartAdapter;
 import com.example.batiknusantara.databinding.FragmentOrderBinding;
 import com.example.batiknusantara.ui.auth.LoginActivity;
@@ -80,6 +82,10 @@ public class OrderFragment extends Fragment {
 
     private void setupCheckoutButton() {
         binding.btnCheckout.setOnClickListener(v -> {
+            if (cartManager.getCartItems().isEmpty()) {
+                showEmptyCartDialog();
+                return;
+            }
             if (!sessionManager.isLoggedIn()) {
                 new AlertDialog.Builder(requireContext())
                     .setTitle("Login Required")
@@ -90,17 +96,24 @@ public class OrderFragment extends Fragment {
                     .setNegativeButton("Batal", null)
                     .show();
             } else {
-                // TODO: Implement checkout logic for logged in user
                 Intent intent = new Intent(requireContext(), CheckoutActivity.class);
                 startActivity(intent);
-                // You can navigate to a new activity or show a success dialog
-//                new AlertDialog.Builder(requireContext())
-//                    .setTitle("Checkout")
-//                    .setMessage("Checkout berhasil!")
-//                    .setPositiveButton("OK", null)
-//                    .show();
             }
         });
+    }
+
+    private void showEmptyCartDialog() {
+        android.app.Dialog dialog = new android.app.Dialog(requireContext());
+        dialog.setContentView(R.layout.dialog_empty_cart);
+        dialog.setCancelable(true);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        com.airbnb.lottie.LottieAnimationView lottieView = dialog.findViewById(R.id.lottieEmptyCart);
+        lottieView.setAnimation(R.raw.empty_cart);
+        lottieView.playAnimation();
+        TextView tvMessage = dialog.findViewById(R.id.tvEmptyCartMessage);
+        tvMessage.setText("Keranjang belanja kamu masih kosong!.");
+        dialog.findViewById(R.id.btnCloseDialog).setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
     }
 
     @Override

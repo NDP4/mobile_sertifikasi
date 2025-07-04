@@ -62,10 +62,10 @@
                     android:padding="4dp">
                     <ImageView
                         android:id="@+id/btnCart"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_cart"
+                        android:src="@drawable/cart"
                         android:contentDescription="Notification" />
                     <TextView
                         android:id="@+id/badgeCartCount"
@@ -89,7 +89,7 @@
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_avatar_default"
+                    android:src="@drawable/avatar"
                     android:background="@drawable/bg_avatar_circle"
                     android:scaleType="centerCrop"
                     android:contentDescription="Profile" />

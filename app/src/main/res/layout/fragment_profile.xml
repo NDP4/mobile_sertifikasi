@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    android:padding="24dp">
+    android:padding="16dp">
 
     <!-- Profile Card -->
     <com.google.android.material.card.MaterialCardView
@@ -16,6 +16,7 @@
         android:layout_marginBottom="24dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
         app:cardBackgroundColor="@color/background">
 
         <LinearLayout
@@ -29,7 +30,7 @@
                 android:id="@+id/imgAvatar"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
-                android:src="@drawable/ic_avatar_default"
+                android:src="@drawable/avatar"
                 android:background="@drawable/bg_avatar_circle"
                 android:scaleType="centerCrop"
                 android:contentDescription="Avatar"
@@ -86,31 +87,113 @@
         android:orientation="vertical"
         android:background="@android:color/transparent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEditProfile"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardEditProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit Profil"
-            android:textAllCaps="false"
-            android:textSize="14sp"
-            android:icon="@drawable/ic_person"
-            android:iconTint="@color/background_button"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="12dp"/>
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="0dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnOrderHistory"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvEditProfileTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edit Profil"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:fontFamily="sans-serif"/>
+
+                    <TextView
+                        android:id="@+id/tvEditProfileDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ubah data profil Anda"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#757575"
+                        android:fontFamily="sans-serif"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_right"
+                    android:contentDescription="Arrow Right"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardOrderHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Riwayat Pemesanan"
-            android:textAllCaps="false"
-            android:textSize="14sp"
-            android:icon="@drawable/ic_order_black_24dp"
-            android:iconTint="@color/background_button"
-            android:textColor="@color/text_secondary"
-            android:layout_marginBottom="12dp"/>
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvOrderHistoryTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Riwayat Pemesanan"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        android:fontFamily="sans-serif"/>
+
+                    <TextView
+                        android:id="@+id/tvOrderHistoryDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lihat riwayat pemesanan anda"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#757575"
+                        android:fontFamily="sans-serif"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_right"
+                    android:contentDescription="Arrow Right"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogout"
@@ -119,7 +202,10 @@
             android:layout_height="wrap_content"
             android:text="Logout"
             android:textAllCaps="false"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:textSize="14sp"
+            app:cornerRadius="12dp"
             android:icon="@drawable/ic_logout"
             android:iconTint="@color/white"
             android:textColor="@color/white"

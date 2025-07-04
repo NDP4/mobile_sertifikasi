@@ -101,7 +101,7 @@ public class ProfileFragment extends Fragment {
 
         // Set avatar default pakai Glide tanpa background circle
         Glide.with(this)
-                .load(R.drawable.ic_avatar_default)
+                .load(R.drawable.avatar)
                 .circleCrop()
                 .into(binding.imgAvatar);
 
@@ -124,13 +124,14 @@ public class ProfileFragment extends Fragment {
         });
 
         // Tombol edit profile
-        binding.btnEditProfile.setOnClickListener(v -> {
+        binding.cardEditProfile.setOnClickListener(v -> {
             // Navigasi ke EditProfileActivity
             startActivity(new android.content.Intent(getActivity(), com.example.batiknusantara.ui.profile.EditProfileActivity.class));
         });
 
         // Tombol riwayat pemesanan (placeholder)
-        binding.btnOrderHistory.setOnClickListener(v -> {
+        binding.cardOrderHistory.setOnClickListener(v -> {
+//        binding.cardHistory.setOnClickListener(v -> {
 //            Toast.makeText(getContext(), "Riwayat pemesanan belum tersedia", Toast.LENGTH_SHORT).show();
             // Navigasi ke OrderHistoryActivity jika sudah tersedia
             startActivity(new Intent(getActivity(), com.example.batiknusantara.ui.order.OrderHistoryActivity.class));

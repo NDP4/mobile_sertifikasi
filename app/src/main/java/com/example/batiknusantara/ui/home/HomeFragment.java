@@ -85,6 +85,13 @@ public class HomeFragment extends Fragment implements CartUpdateListener {
             BottomNavigationView bottomNav = requireActivity().findViewById(R.id.nav_view);
             bottomNav.setSelectedItemId(R.id.navigation_order);
         });
+        
+        ImageView profileImage = root.findViewById(R.id.profile_image);
+        profileImage.setOnClickListener(v -> {
+            // Navigasi ke ProfileFragment menggunakan bottom navigation
+            BottomNavigationView bottomNav = requireActivity().findViewById(R.id.nav_view);
+            bottomNav.setSelectedItemId(R.id.navigation_profile);
+        });
 
         // Tambahkan CardView welcome secara dinamis
         LinearLayout rootLayout = (LinearLayout) binding.getRoot().findViewById(R.id.layoutHomeRoot);
