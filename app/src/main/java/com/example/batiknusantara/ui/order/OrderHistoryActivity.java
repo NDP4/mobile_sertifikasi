@@ -42,6 +42,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
         });
         binding.rvOrderHistory.setLayoutManager(new LinearLayoutManager(this));
         binding.rvOrderHistory.setAdapter(adapter);
+
+        // tombol kembali
+        binding.btnBack.setOnClickListener(v -> finish());
         loadOrderHistory();
     }
 

@@ -36,13 +36,15 @@ public class OrderDetailActivity extends AppCompatActivity {
         binding = ActivityOrderDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.btnBack.setOnClickListener(v -> finish());
+
         // Set up back button (gunakan navigationIcon Toolbar)
-        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+//        binding.btnBack.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
 
         apiService = ApiClient.getClient().create(ApiService.class);
         OrderHistoryResponse.OrderData order = (OrderHistoryResponse.OrderData) getIntent().getSerializableExtra("order_data");

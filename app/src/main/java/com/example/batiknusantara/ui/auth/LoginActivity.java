@@ -57,6 +57,27 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 binding.progressBar.setVisibility(View.GONE);
 
+                // pesan salah password dan email saat login
+                if (response.isSuccessful()&&response.body()!=null){
+                    LoginResponse loginResponse = response.body();
+                    if (loginResponse.status) {
+                        Toasty.success(LoginActivity.this, "Login berhasil!", Toasty.LENGTH_SHORT, true).show();
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("navigate_home", true);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toasty.error(LoginActivity.this, loginResponse.message, Toasty.LENGTH_SHORT, true).show();
+                        binding.tilEmail.setError("Email atau password salah");
+                        binding.tilPassword.setError("Email atau password salah");
+                    }
+                }else {
+                    Toasty.error(LoginActivity.this, "Login gagal!", Toasty.LENGTH_SHORT, true).show();
+                    binding.tilEmail.setError("Email atau password salah");
+                    binding.tilPassword.setError("Email atau password salah");
+                }
+
                 // Add debug logs
                 android.util.Log.d("LOGIN_DEBUG", "Response code: " + response.code());
                 if (!response.isSuccessful()) {

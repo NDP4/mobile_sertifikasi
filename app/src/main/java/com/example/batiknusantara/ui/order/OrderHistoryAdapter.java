@@ -3,6 +3,7 @@ package com.example.batiknusantara.ui.order;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,7 +43,9 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvOrderId, tvDate, tvTotal, tvStatus, tvProducts;
+        TextView tvOrderId, tvDate, tvTotal, tvStatus, tvProducts, tvPaymentMethod;
+        Button btnUploadProof;
+
         ViewHolder(View itemView) {
             super(itemView);
             tvOrderId = itemView.findViewById(R.id.tvOrderId);
@@ -50,7 +53,10 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             tvTotal = itemView.findViewById(R.id.tvOrderTotal);
             tvStatus = itemView.findViewById(R.id.tvOrderStatus);
             tvProducts = itemView.findViewById(R.id.tvOrderProducts);
+            tvPaymentMethod = itemView.findViewById(R.id.tvOrderPaymentMethod);
+            btnUploadProof = itemView.findViewById(R.id.btnUploadProof);
         }
+
         void bind(OrderHistoryResponse.OrderData order) {
             tvOrderId.setText("Order #" + order.trans_id);
             tvDate.setText(order.tgl_order);
@@ -58,6 +64,11 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             formatter.setMinimumFractionDigits(0);
             tvTotal.setText(formatter.format(order.total_bayar));
             tvProducts.setText(order.products);
+
+            // Set payment method text
+            String metodeBayar = order.metodebayar == 0 ? "Transfer Bank" : "COD";
+            tvPaymentMethod.setText("Metode: " + metodeBayar);
+
             String statusText = "";
             switch (order.status) {
                 case 0: statusText = "Menunggu Pembayaran"; break;
@@ -67,6 +78,16 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
                 default: statusText = "-";
             }
             tvStatus.setText(statusText);
+
+            // Show upload button only for bank transfer method and status is waiting for payment
+            if (order.metodebayar == 0) { // Transfer Bank
+                btnUploadProof.setVisibility(View.VISIBLE);
+                // Disable button if payment is verified (status > 0) or status is Selesai (status == 3)
+                btnUploadProof.setEnabled(order.status == 0 && order.status != 3);
+            } else {
+                btnUploadProof.setVisibility(View.GONE);
+            }
+
             itemView.setOnClickListener(v -> {
                 if (listener != null) listener.onOrderClick(order);
             });
