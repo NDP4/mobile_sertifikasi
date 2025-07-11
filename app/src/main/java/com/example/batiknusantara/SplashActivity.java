@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         LottieAnimationView animationView = findViewById(R.id.splashAnimation);
-        animationView.setAnimation(R.raw.batik_nusantaran);
+        animationView.setAnimation(R.raw.batik_nusantara);
         animationView.setRepeatCount(0);
         animationView.playAnimation();
 

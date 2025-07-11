@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/home"
         android:title="@string/title_home" />
 
     <item
@@ -13,12 +13,12 @@
 
     <item
         android:id="@+id/navigation_order"
-        android:icon="@drawable/ic_order_black_24dp"
+        android:icon="@drawable/cart"
         android:title="@string/title_order" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_profile_black_24dp"
+        android:icon="@drawable/person"
         android:title="@string/title_profile" />
 
 </menu>

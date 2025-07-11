@@ -11,56 +11,79 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/tvOrderId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Order #123"
-            android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/tvOrderDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2025-06-20"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp"
-            android:layout_marginTop="2dp"/>
-
-        <TextView
-            android:id="@+id/tvOrderProducts"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Produk: ..."
-            android:textColor="@color/text_primary"
-            android:textSize="14sp"
-            android:layout_marginTop="6dp"
-            android:maxLines="2"
-            android:ellipsize="end"/>
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvOrderTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rp 0"
-            android:textColor="@color/primary"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="6dp"/>
+            <TextView
+                android:id="@+id/tvOrderId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order #123"
+                android:textStyle="bold"
+                android:textColor="@color/primary"
+                android:textSize="16sp"/>
 
-        <TextView
-            android:id="@+id/tvOrderStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Status"
-            android:textColor="@color/secondaryText"
-            android:textSize="13sp"
-            android:layout_marginTop="4dp"/>
+            <TextView
+                android:id="@+id/tvOrderDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2025-06-20"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"/>
+
+            <TextView
+                android:id="@+id/tvOrderProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Produk: ..."
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/tvOrderTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp 0"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginTop="6dp"/>
+
+            <TextView
+                android:id="@+id/tvOrderStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textColor="@color/secondaryText"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp"/>
+            <TextView
+                android:id="@+id/tvOrderPaymentMethod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Metode: Transfer"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp"/>
+
+            <Button
+                android:id="@+id/btnUploadProof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Bukti Bayar"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

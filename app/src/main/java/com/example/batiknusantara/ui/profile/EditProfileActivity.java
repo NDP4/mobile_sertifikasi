@@ -29,6 +29,14 @@ public class EditProfileActivity extends AppCompatActivity {
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Set up back button
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         sessionManager = new SessionManager(this);
         apiService = ApiClient.getClient().create(ApiService.class);
         int userId = sessionManager.getUserId();
@@ -73,6 +81,10 @@ public class EditProfileActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
+                        // ambil nama baru dari input
+                        String newName = binding.etNama.getText().toString();
+                        // update session manager dengan nama baru
+                        sessionManager.setName(newName);
                         Toasty.success(EditProfileActivity.this, "Profile berhasil diupdate", Toasty.LENGTH_SHORT, true).show();
                         finish();
                     } else {

@@ -1,10 +1,12 @@
 package com.example.batiknusantara.ui.product;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
+import com.example.batiknusantara.MainActivity;
 import com.example.batiknusantara.R;
 import com.example.batiknusantara.api.ApiClient;
 import com.example.batiknusantara.api.ApiService;
@@ -49,6 +51,18 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void loadProductDetail(String productId) {
+        // Tambahkan request untuk increment view_count
+        apiService.incrementProductView("view", productId).enqueue(new retrofit2.Callback<com.example.batiknusantara.api.response.BaseResponse>() {
+            @Override
+            public void onResponse(Call<com.example.batiknusantara.api.response.BaseResponse> call, Response<com.example.batiknusantara.api.response.BaseResponse> response) {
+                // Tidak perlu aksi, hanya untuk increment
+            }
+            @Override
+            public void onFailure(Call<com.example.batiknusantara.api.response.BaseResponse> call, Throwable t) {
+                // Tidak perlu aksi
+            }
+        });
+
         apiService.getProductDetail(productId).enqueue(new Callback<ProductDetailResponse>() {
             @Override
             public void onResponse(Call<ProductDetailResponse> call, Response<ProductDetailResponse> response) {
@@ -72,6 +86,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.tvProductName.setText(product.getMerk());
         binding.tvCategory.setText(product.getKategori());
         binding.tvStock.setText("Stock: " + product.getStok());
+        binding.tvViewCount.setText("Dilihat: " + product.getView_count() + "x");
         binding.tvDescription.setText(product.getDeskripsi());
         this.currentProduct = product;
 
@@ -118,13 +133,16 @@ public class ProductDetailActivity extends AppCompatActivity {
             CartManager cartManager = new CartManager(this);
             cartManager.addToCart(currentProduct);
             Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
+            // Update badge cart
+            MainActivity.updateCartBadgeStatic();
         });
 
         binding.btnBuyNow.setOnClickListener(v -> {
-            CartManager cartManager = new CartManager(this);
-            cartManager.addToCart(currentProduct);
-            // TODO: Navigate to cart/checkout
-            Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
+            // Buy Now: langsung checkout produk ini saja
+            Intent intent = new Intent(this, com.example.batiknusantara.ui.order.CheckoutActivity.class);
+            intent.putExtra("buy_now_product", currentProduct);
+            intent.putExtra("buy_now_quantity", 1);
+            startActivity(intent);
         });
     }
 

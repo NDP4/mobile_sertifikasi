@@ -41,6 +41,9 @@ public interface ApiService {
     @GET("products.php")
     Call<ProductDetailResponse> getProductDetail(@Query("kode") String kode);
 
+    @GET("products.php")
+    Call<BaseResponse> incrementProductView(@Query("action") String action, @Query("kode") String kode);
+
 //    @GET("orders.php?action=provinces")
 //    Call<ResponseBody> getProvinces();
 //

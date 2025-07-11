@@ -58,8 +58,9 @@
         <item name="colorOnSecondary">@color/black</item>
         
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">true</item>
+<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+        <item name="android:statusBarColor">@color/status_bar</item>
+<!--        <item name="android:windowLightStatusBar">true</item>-->
         
         <!-- Text colors -->
         <item name="android:textColorPrimary">@color/text_primary</item>

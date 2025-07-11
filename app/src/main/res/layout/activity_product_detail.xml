@@ -47,7 +47,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -103,6 +103,14 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/tvViewCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -115,10 +123,11 @@
                 android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="30dp"
                 android:layout_marginTop="8dp"
                 android:lineSpacingExtra="4dp"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="12.5sp" />
 
         </LinearLayout>
 

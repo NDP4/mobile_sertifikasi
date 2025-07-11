@@ -2,9 +2,11 @@ package com.example.batiknusantara.ui.product;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.SearchView;
 import android.widget.ArrayAdapter;
@@ -12,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -79,6 +82,7 @@ public class ProductFragment extends Fragment {
             binding.btnResetFilter.setVisibility(View.GONE);
         }
 
+
         return root;
     }
 
@@ -87,7 +91,17 @@ public class ProductFragment extends Fragment {
                 Toast.makeText(requireContext(), "Added to cart: " + product.getMerk(), Toast.LENGTH_SHORT).show()
         );
 
-        binding.rvProducts.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 2);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (productAdapter.getItemViewType(position) == 1) { // VIEW_TYPE_WATERMARK
+                    return 2;
+                }
+                return 1;
+            }
+        });
+        binding.rvProducts.setLayoutManager(layoutManager);
         binding.rvProducts.setAdapter(productAdapter);
     }
 
@@ -239,9 +253,6 @@ public class ProductFragment extends Fragment {
         // Sorting
         if (filterSort != null) {
             switch (filterSort) {
-                case "terbaru":
-                    // Assuming Product has getCreatedAt() or similar, else skip
-                    break;
                 case "harga_terendah":
                     filteredProducts.sort((a, b) -> Double.compare(a.getHargajual(), b.getHargajual()));
                     break;
@@ -251,9 +262,15 @@ public class ProductFragment extends Fragment {
                 case "az":
                     filteredProducts.sort((a, b) -> a.getMerk().compareToIgnoreCase(b.getMerk()));
                     break;
+                // case "terbaru":
+                //     // Implement jika ada field tanggal
+                //     break;
             }
         }
-        productAdapter.updateProducts(filteredProducts);
+        // Tambahkan watermark di akhir
+        List<Product> displayList = new ArrayList<>(filteredProducts);
+        displayList.add(null); // null sebagai watermark
+        productAdapter.updateProducts(displayList);
     }
 
     private void loadProducts() {
@@ -279,6 +296,14 @@ public class ProductFragment extends Fragment {
                 Toast.makeText(requireContext(), "Network error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void applyFilter(String kategori) {
+        this.filterKategori = kategori;
+        if (filterKategori != null) {
+            binding.btnResetFilter.setVisibility(View.VISIBLE);
+            filterProducts(binding.searchViewProduk.getQuery().toString());
+        }
     }
 
     @Override

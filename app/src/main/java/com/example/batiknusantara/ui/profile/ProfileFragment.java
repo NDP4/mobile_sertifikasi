@@ -12,11 +12,13 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +73,16 @@ public class ProfileFragment extends Fragment {
         View root = binding.getRoot();
         sessionManager = new SessionManager(requireContext());
 
+        TextView watermark = new TextView(requireContext());
+        watermark.setText("By Nur Dwi Priyambodo\nCoreX");
+        watermark.setTextSize(10f);
+        watermark.setTextColor(getResources().getColor(R.color.dark_gray));
+        watermark.setGravity(Gravity.CENTER);
+        watermark.setPadding(0, 32, 0, 16);
+
+        LinearLayout rootLayout = (LinearLayout) binding.getRoot().findViewById(R.id.llProfile);
+        rootLayout.addView(watermark);
+
         // ApiService dengan timeout 60 detik
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -89,17 +101,17 @@ public class ProfileFragment extends Fragment {
 
         // Set avatar default pakai Glide tanpa background circle
         Glide.with(this)
-                .load(R.drawable.ic_avatar_default)
+                .load(R.drawable.avatar)
                 .circleCrop()
                 .into(binding.imgAvatar);
 
         // Info user
         String name = sessionManager.getName();
-        String email = sessionManager.getEmail();
+//        String email = sessionManager.getEmail();
         if (name != null && !name.isEmpty()) {
-            binding.tvUserInfo.setText("Login sebagai: " + email);
+            binding.tvUserInfo.setText("Login sebagai: " + name);
         } else {
-            binding.tvUserInfo.setText("Login sebagai: " + email);
+//            binding.tvUserInfo.setText("Login sebagai: " + email);
         }
 
         // Lokasi
@@ -112,13 +124,14 @@ public class ProfileFragment extends Fragment {
         });
 
         // Tombol edit profile
-        binding.btnEditProfile.setOnClickListener(v -> {
+        binding.cardEditProfile.setOnClickListener(v -> {
             // Navigasi ke EditProfileActivity
             startActivity(new android.content.Intent(getActivity(), com.example.batiknusantara.ui.profile.EditProfileActivity.class));
         });
 
         // Tombol riwayat pemesanan (placeholder)
-        binding.btnOrderHistory.setOnClickListener(v -> {
+        binding.cardOrderHistory.setOnClickListener(v -> {
+//        binding.cardHistory.setOnClickListener(v -> {
 //            Toast.makeText(getContext(), "Riwayat pemesanan belum tersedia", Toast.LENGTH_SHORT).show();
             // Navigasi ke OrderHistoryActivity jika sudah tersedia
             startActivity(new Intent(getActivity(), com.example.batiknusantara.ui.order.OrderHistoryActivity.class));

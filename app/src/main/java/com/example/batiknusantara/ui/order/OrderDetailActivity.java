@@ -2,10 +2,12 @@ package com.example.batiknusantara.ui.order;
 
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.batiknusantara.R;
 import com.example.batiknusantara.api.response.OrderDetailResponse;
 import com.example.batiknusantara.api.response.OrderHistoryResponse;
 import com.example.batiknusantara.databinding.ActivityOrderDetailBinding;
@@ -34,6 +36,16 @@ public class OrderDetailActivity extends AppCompatActivity {
         binding = ActivityOrderDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.btnBack.setOnClickListener(v -> finish());
+
+        // Set up back button (gunakan navigationIcon Toolbar)
+//        binding.btnBack.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+
         apiService = ApiClient.getClient().create(ApiService.class);
         OrderHistoryResponse.OrderData order = (OrderHistoryResponse.OrderData) getIntent().getSerializableExtra("order_data");
         if (order == null) {
@@ -54,12 +66,14 @@ public class OrderDetailActivity extends AppCompatActivity {
         symbols.setCurrencySymbol(formattedSymbol);
         ((java.text.DecimalFormat) formatter).setDecimalFormatSymbols(symbols);
 
+        // setting order details
         binding.tvOrderId.setText("Order ID: " + order.trans_id);
         binding.tvOrderDate.setText("Tanggal: " + order.tgl_order);
         binding.tvOrderStatus.setText("Status: " + getStatusText(order.status));
-        binding.tvOrderSubtotal.setText("Subtotal: " + formatter.format(order.subtotal));
-        binding.tvOrderOngkir.setText("Ongkir: " + formatter.format(order.ongkir));
-        binding.tvOrderTotal.setText("Total Bayar: " + formatter.format(order.total_bayar));
+        binding.tvOrderSubtotal.setText(formatter.format(order.subtotal));
+        binding.tvOrderOngkir.setText(formatter.format(order.ongkir));
+        binding.tvOrderTotal.setText(formatter.format(order.total_bayar));
+        binding.tvOrderNamaPenerima.setText("Nama Penerima: " + order.nama_penerima);
         binding.tvOrderAlamat.setText("Alamat: " + order.alamat_kirim);
         binding.tvOrderTelp.setText("Telp: " + order.telp_kirim);
         binding.tvOrderKota.setText("Kota: " + order.kota);

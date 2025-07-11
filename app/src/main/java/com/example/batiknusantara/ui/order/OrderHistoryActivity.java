@@ -13,6 +13,8 @@ import com.example.batiknusantara.api.response.OrderHistoryResponse;
 import com.example.batiknusantara.databinding.ActivityOrderHistoryBinding;
 import com.example.batiknusantara.utils.SessionManager;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +42,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
         });
         binding.rvOrderHistory.setLayoutManager(new LinearLayoutManager(this));
         binding.rvOrderHistory.setAdapter(adapter);
+
+        // tombol kembali
+        binding.btnBack.setOnClickListener(v -> finish());
         loadOrderHistory();
     }
 
@@ -58,6 +63,13 @@ public class OrderHistoryActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null && response.body().status) {
                     orderList.clear();
                     orderList.addAll(response.body().data);
+                    // Sort orderList by trans_id descending (latest first)
+                    Collections.sort(orderList, new Comparator<OrderHistoryResponse.OrderData>() {
+                        @Override
+                        public int compare(OrderHistoryResponse.OrderData o1, OrderHistoryResponse.OrderData o2) {
+                            return Integer.compare(o2.trans_id, o1.trans_id);
+                        }
+                    });
                     adapter.notifyDataSetChanged();
                     binding.tvEmpty.setVisibility(orderList.isEmpty() ? View.VISIBLE : View.GONE);
                 } else {

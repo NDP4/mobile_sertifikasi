@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.example.batiknusantara.MainActivity;
 import com.example.batiknusantara.R;
 import com.example.batiknusantara.databinding.ItemProductBestSellerBinding;
 import com.example.batiknusantara.model.Product;
@@ -101,6 +102,7 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Vi
                 binding.tvOriginalPrice.setVisibility(View.GONE);
             }
             binding.tvStock.setText("Stok: " + product.getStok());
+            binding.tvViewCount.setText("Dilihat: " + product.getView_count() + "x");
 
             // Load image with error handling
             Glide.with(itemView.getContext())
@@ -119,6 +121,14 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Vi
                 CartManager cartManager = new CartManager(itemView.getContext());
                 cartManager.addToCart(product);
                 Toast.makeText(itemView.getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
+                // Update badge count using static method
+                MainActivity.updateCartBadgeStatic();
+            });
+            // Tambahkan click pada seluruh item agar buka detail
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(itemView.getContext(), ProductDetailActivity.class);
+                intent.putExtra("product_id", product.getKode());
+                itemView.getContext().startActivity(intent);
             });
         }
     }

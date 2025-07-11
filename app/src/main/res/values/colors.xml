@@ -12,6 +12,7 @@
     <color name="text_primary">#212121</color>
     <color name="text_secondary">#757575</color>
     <color name="secondaryText">#757575</color>
+    <color name="text_button">#E8E8E8</color>
     
     <!-- Basic Colors -->
     <color name="white">#FFFFFF</color>
@@ -21,6 +22,7 @@
     <!-- Background Colors -->
     <color name="background">#FAFAFA</color>
     <color name="surface">#FFFFFF</color>
+    <color name="background_button">#242331</color>
     
     <!-- Status Bar Colors -->
     <color name="status_bar">#3E2723</color>
@@ -33,4 +35,8 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
+<!--    warna lain-->
+    <color name="light_gray">#F5F5F5</color>
+    <color name="dark_gray">#616161</color>
 </resources>
